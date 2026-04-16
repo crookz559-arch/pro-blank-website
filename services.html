@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Услуги — ПРО-БЛАНК | Пошив мерча, Аксессуары, Брендирование</title>
+  <meta name="description" content="Пошив мерча, производство аксессуаров и полное брендирование в собственном цехе в Москве. От 30 штук. Трикотаж и текстиль." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- SERVICES PAGE ---- */
+    .services-full-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .svc-card {
+      background: var(--card-bg);
+      border-radius: var(--r-lg);
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .svc-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .svc-card:hover {
+      border-color: transparent;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+    .svc-card:hover::before { transform: scaleX(1); }
+    .svc-card__num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .svc-card__icon { font-size: 40px; margin-bottom: 16px; display: block; }
+    .svc-card__title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .svc-card__desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .svc-card__items {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .svc-card__item {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .svc-card__item::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .svc-card__badge {
+      position: absolute;
+      top: 20px; right: 20px;
+    }
+
+    /* FEATURE HIGHLIGHT */
+    .feature-highlight {
+      background: var(--bg-dark);
+      border-radius: var(--r-xl);
+      padding: 64px;
+      color: var(--text-inv);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-highlight::before {
+      content: '';
+      position: absolute;
+      right: -100px; top: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(200,255,0,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .feature-highlight__title { color: var(--text-inv); margin-bottom: 16px; }
+    .feature-highlight__desc {
+      font-size: 16px;
+      color: rgba(248,248,246,0.55);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+    .feature-highlight__list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .feature-highlight__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: rgba(248,248,246,0.8);
+    }
+    .feature-highlight__item::before {
+      content: '✓';
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--bg-dark);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .feature-highlight__visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .feature-mini-stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--r-md);
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .feature-mini-stat .stat-number { font-size: 40px; color: var(--accent); }
+    .feature-mini-stat .stat-label { color: rgba(248,248,246,0.4); font-size: 12px; }
+
+    /* MATERIALS */
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .material-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+    .material-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .material-card__icon { font-size: 36px; margin-bottom: 12px; display: block; }
+    .material-card__name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .material-card__desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* DECORATIONS */
+    .decor-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    .decor-item {
+      padding: 20px 16px;
+      border-radius: var(--r-md);
+      background: var(--card-bg);
+      text-align: center;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+      cursor: default;
+    }
+    .decor-item:hover { background: var(--accent); transform: translateY(-3px); }
+    .decor-item:hover .decor-item__name { color: var(--bg-dark); }
+    .decor-item__icon { font-size: 28px; margin-bottom: 8px; display: block; }
+    .decor-item__name { font-size: 13px; font-weight: 600; color: var(--text); }
+
+    /* PRICING */
+    .pricing-block {
+      background: var(--card-bg);
+      border-radius: var(--r-xl);
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .pricing-block__info { max-width: 500px; }
+    .pricing-block__title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .pricing-block__desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+
+    @media (max-width: 900px) {
+      .services-full-grid { grid-template-columns: 1fr 1fr; /* уже 2 col по умолчанию */ }
+      .feature-highlight { grid-template-columns: 1fr; gap: 40px; padding: 40px; }
+      .materials-grid { grid-template-columns: repeat(2, 1fr); }
+      .decor-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .services-full-grid { grid-template-columns: 1fr; }
+      .materials-grid { grid-template-columns: repeat(2, 1fr); }
+      .decor-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-highlight { padding: 28px; }
+      .feature-highlight__visual { grid-template-columns: 1fr 1fr; }
+      /* pricing block buttons stack on mobile */
+      .pricing-block { flex-direction: column; padding: 28px 20px; }
+      .pricing-block > div:last-child { flex-direction: column; width: 100%; }
+      .pricing-block > div:last-child .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header dark" id="header">
+  <a href="index.html" class="header__logo">ПРО-БЛАНК<span class="accent-dot"></span></a>
+  <nav class="header__nav">
+    <a href="index.html">Главная</a>
+    <a href="services.html" class="active">Услуги</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="about.html">О нас</a>
+    <a href="showroom.html">Шоурум</a>
+  </nav>
+  <div class="header__actions">
+    <div class="header__messenger">
+      <a href="https://wa.me/79999999999" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="https://t.me/problank_official" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </a>
+    </div>
+    <a href="index.html#cta" class="btn btn-primary btn-sm">Узнать цену</a>
+  </div>
+  <button class="header__burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</header>
+<nav class="mobile-menu">
+  <button class="mobile-menu__close">✕</button>
+  <a href="index.html">Главная</a>
+  <a href="services.html">Услуги</a>
+  <a href="portfolio.html">Портфолио</a>
+  <a href="about.html">О нас</a>
+  <a href="showroom.html">Шоурум</a>
+  <a href="index.html#cta">Узнать цену</a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__label"><span class="tag">Услуги</span></div>
+    <h1 class="display-lg page-hero__title reveal">Производим всё,<br>что носят</h1>
+    <p class="page-hero__sub reveal reveal-delay-1">
+      Трикотаж, текстиль, аксессуары и полное брендирование — в одном цехе, под одной ответственностью.
+    </p>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker dark">
+  <div class="ticker-track">
+    <span class="ticker-item">ПОШИВ МЕРЧА</span>
+    <span class="ticker-item">АКСЕССУАРЫ</span>
+    <span class="ticker-item">БРЕНДИРОВАНИЕ</span>
+    <span class="ticker-item">ТРИКОТАЖ</span>
+    <span class="ticker-item">ТЕКСТИЛЬ</span>
+    <span class="ticker-item">ВЫШИВКА</span>
+    <span class="ticker-item">DTF-ПЕЧАТЬ</span>
+    <span class="ticker-item">ШЕЛКОГРАФИЯ</span>
+    <span class="ticker-item">ОТ 30 ШТ</span>
+  </div>
+</div>
+
+<!-- MAIN SERVICES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Основные направления</span>
+        <h2 class="display-md mt-16">3 услуги —<br>полный цикл</h2>
+      </div>
+    </div>
+
+    <div class="services-full-grid">
+      <!-- MERCH -->
+      <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-card__num">01 / ПРОИЗВОДСТВО</div>
+        <span class="svc-card__icon">👕</span>
+        <h3 class="svc-card__title">Пошив мерча</h3>
+        <p class="svc-card__desc">Разрабатываем лекала, подбираем плотность и состав ткани, шьём серию под ключ. Работаем с трикотажем (футер, кулирка, рибана, кашкорсе), текстилем (полиэстер, хлопок-сатин) и шерстяными тканями.</p>
+        <div class="svc-card__items">
+          <span class="svc-card__item">Худи и свитшоты</span>
+          <span class="svc-card__item">Футболки и лонгсливы</span>
+          <span class="svc-card__item">Брюки, шорты, лосины</span>
+          <span class="svc-card__item">Рубашки и поло</span>
+          <span class="svc-card__item">Форменная одежда</span>
+          <span class="svc-card__item">Авторские вещи по вашему лекалу</span>
+        </div>
+      </div>
+
+      <!-- ACCESSORIES -->
+      <div class="svc-card reveal reveal-delay-2">
+        <div class="svc-card__num">02 / АКСЕССУАРЫ</div>
+        <span class="svc-card__icon">🎒</span>
+        <h3 class="svc-card__title">Аксессуары</h3>
+        <p class="svc-card__desc">Производим малые вещи под бренд — от шапок и носков до шоперов и сумок. Каждый аксессуар доступен с индивидуальным декором и этикеткой.</p>
+        <div class="svc-card__items">
+          <span class="svc-card__item">Шапки и бафы</span>
+          <span class="svc-card__item">Носки с жаккардом</span>
+          <span class="svc-card__item">Шоперы и сумки</span>
+          <span class="svc-card__item">Рюкзаки</span>
+          <span class="svc-card__item">Ремни и пояса</span>
+          <span class="svc-card__item">Галстуки, платки, бандана</span>
+        </div>
+      </div>
+
+      <!-- BRANDING -->
+      <div class="svc-card reveal reveal-delay-3">
+        <div class="svc-card__num">03 / ДЕКОР</div>
+        <span class="svc-card__icon">✏️</span>
+        <h3 class="svc-card__title">Брендирование</h3>
+        <p class="svc-card__desc">Наносим логотипы, принты и декор на готовые изделия любым способом. Также берём чужую заготовку — добавляем ваш бренд и возвращаем готовым продуктом.</p>
+        <div class="svc-card__items">
+          <span class="svc-card__item">Шелкография (до 6 цветов)</span>
+          <span class="svc-card__item">DTF / DTG полноцветная печать</span>
+          <span class="svc-card__item">Вышивка (плоская и объёмная)</span>
+          <span class="svc-card__item">Термоперенос и флок</span>
+          <span class="svc-card__item">Нашивки и патчи</span>
+          <span class="svc-card__item">Лазерная гравировка</span>
+        </div>
+      </div>
+
+      <!-- DESIGN -->
+      <div class="svc-card reveal reveal-delay-4" id="design">
+        <div class="svc-card__num">04 / ДИЗАЙН</div>
+        <span class="svc-card__icon">🎨</span>
+        <h3 class="svc-card__title">Разработка дизайна</h3>
+        <p class="svc-card__desc">Создаём принты, логотипы и паттерны под ваш бренд с нуля или дорабатываем ваши идеи. Адаптируем макеты к производству под любую технику нанесения.</p>
+        <div class="svc-card__items">
+          <span class="svc-card__item">Разработка принтов и паттернов</span>
+          <span class="svc-card__item">Адаптация логотипа под вышивку / DTF</span>
+          <span class="svc-card__item">Технические файлы для цеха</span>
+          <span class="svc-card__item">3D-визуализация изделия</span>
+          <span class="svc-card__item">Неограниченные правки до OK</span>
+          <span class="svc-card__item">Бесплатно при заказе тиража</span>
+        </div>
+      </div>
+
+      <!-- PATTERNS -->
+      <div class="svc-card reveal reveal-delay-5" id="patterns" style="grid-column: 1 / -1;">
+        <div class="svc-card__num">05 / ЛЕКАЛА</div>
+        <span class="svc-card__icon">📐</span>
+        <h3 class="svc-card__title">Разработка лекал</h3>
+        <p class="svc-card__desc">Создаём лекала под ваш фасон и посадку с нуля — или адаптируем готовые. Учитываем линейку размеров, особенности ткани и технологию пошива. Лекала хранятся у нас для повторных тиражей.</p>
+        <div class="svc-card__items">
+          <span class="svc-card__item">Разработка базовых лекал с нуля</span>
+          <span class="svc-card__item">Градация размерного ряда (XS–5XL)</span>
+          <span class="svc-card__item">Адаптация под ткань и крой</span>
+          <span class="svc-card__item">Тест-образец перед запуском серии</span>
+          <span class="svc-card__item">Хранение лекал для повторных заказов</span>
+          <span class="svc-card__item">Техническое задание на пошив</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE: EXPRESS -->
+<section class="section-sm">
+  <div class="container">
+    <div class="feature-highlight reveal">
+      <div>
+        <span class="label-accent mb-16" style="display:block;">⚡ Экспресс-производство</span>
+        <h2 class="display-md feature-highlight__title">Срочный заказ<br>от 7 дней</h2>
+        <p class="feature-highlight__desc">
+          Когда дедлайн горит — мы переключаем мощности. Экспресс-производство доступно при тираже от 30 штук и согласованных макетах.
+        </p>
+        <div class="feature-highlight__list">
+          <div class="feature-highlight__item">Приоритетная постановка в очередь</div>
+          <div class="feature-highlight__item">Ускоренное согласование макетов</div>
+          <div class="feature-highlight__item">Фото-отчёт в процессе производства</div>
+          <div class="feature-highlight__item">Доставка в день готовности</div>
+        </div>
+        <div style="margin-top:32px;">
+          <a href="index.html#cta" class="btn btn-primary btn-lg">Запросить сроки</a>
+        </div>
+      </div>
+      <div class="feature-highlight__visual">
+        <div class="feature-mini-stat">
+          <div class="stat-number" data-counter data-target="7" data-suffix=" дн">7 дн</div>
+          <div class="stat-label">минимальный срок</div>
+        </div>
+        <div class="feature-mini-stat">
+          <div class="stat-number" data-counter data-target="30" data-suffix=" шт">30 шт</div>
+          <div class="stat-label">от этого тиража</div>
+        </div>
+        <div class="feature-mini-stat">
+          <div class="stat-number" data-counter data-target="24" data-suffix=" ч">24 ч</div>
+          <div class="stat-label">ответ на заявку</div>
+        </div>
+        <div class="feature-mini-stat">
+          <div class="stat-number" data-counter data-target="100" data-suffix="%">100%</div>
+          <div class="stat-label">контроль ОТК</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="section" style="background:var(--card-bg);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Сырьё и материалы</span>
+        <h2 class="display-md mt-16">С чем мы работаем</h2>
+        <p class="section-header__desc">Используем проверенные материалы с сертификатами качества. Помогаем подобрать состав под задачу и бюджет.</p>
+      </div>
+    </div>
+    <div class="materials-grid">
+      <div class="material-card reveal reveal-delay-1">
+        <span class="material-card__icon">🧶</span>
+        <div class="material-card__name">Трикотаж</div>
+        <div class="material-card__desc">Футер, кулирка, рибана, кашкорсе — для худи, свитшотов, футболок, лонгсливов и манжет. 180–340 г/м².</div>
+      </div>
+      <div class="material-card reveal reveal-delay-2">
+        <span class="material-card__icon">⚡</span>
+        <div class="material-card__name">Текстиль</div>
+        <div class="material-card__desc">Полиэстерные ткани: таслан, оксфорд, курточные — для ветровок, спортивной и промо-одежды. Лёгкие и прочные.</div>
+      </div>
+      <div class="material-card reveal reveal-delay-3">
+        <span class="material-card__icon">🐑</span>
+        <div class="material-card__name">Шерсть</div>
+        <div class="material-card__desc">Шерстяные и полушерстяные ткани — для пальто, бомберов и верхней одежды. Тепло, структура, премиальный вид.</div>
+      </div>
+      <div class="material-card reveal reveal-delay-1">
+        <span class="material-card__icon">🏔️</span>
+        <div class="material-card__name">Флис / Полар</div>
+        <div class="material-card__desc">Тёплые изделия и подкладки. Хорошо держит тепло, лёгкий, мягкий.</div>
+      </div>
+      <div class="material-card reveal reveal-delay-2">
+        <span class="material-card__icon">✨</span>
+        <div class="material-card__name">Хлопок-сатин</div>
+        <div class="material-card__desc">Плотный хлопок с гладкой поверхностью — идеален для печати и брендирования.</div>
+      </div>
+      <div class="material-card reveal reveal-delay-3">
+        <span class="material-card__icon">🎭</span>
+        <div class="material-card__name">Смесовые ткани</div>
+        <div class="material-card__desc">Хлопок+полиэстер 50/50 — баланс мягкости и практичности. Хит для мерча.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECORATIONS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Способы нанесения</span>
+        <h2 class="display-md mt-16">Брендирование<br>любой сложности</h2>
+      </div>
+    </div>
+    <div class="decor-grid reveal">
+      <div class="decor-item">
+        <span class="decor-item__icon">🖨️</span>
+        <div class="decor-item__name">Шелкография</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">🎨</span>
+        <div class="decor-item__name">DTF-печать</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">🧷</span>
+        <div class="decor-item__name">Вышивка</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">🔥</span>
+        <div class="decor-item__name">Термоперенос</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">🌟</span>
+        <div class="decor-item__name">Флок</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">🏷️</span>
+        <div class="decor-item__name">Нашивки</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">🔵</span>
+        <div class="decor-item__name">DTG-печать</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">⬛</span>
+        <div class="decor-item__name">Лазер</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">📎</span>
+        <div class="decor-item__name">Патчи</div>
+      </div>
+      <div class="decor-item">
+        <span class="decor-item__icon">🏷</span>
+        <div class="decor-item__name">Бирки/лейблы</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS STEPS -->
+<section class="section process-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Как мы работаем</span>
+        <h2 class="display-md mt-16">Путь вашего заказа</h2>
+      </div>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="process-step__num">01</div>
+        <div class="process-step__title">Заявка</div>
+        <div class="process-step__desc">Оставляете заявку — менеджер свяжется в течение 2 часов</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num">02</div>
+        <div class="process-step__title">Бриф и КП</div>
+        <div class="process-step__desc">Уточняем детали, готовим эскизы и коммерческое предложение</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num">03</div>
+        <div class="process-step__title">Пошив</div>
+        <div class="process-step__desc">Запускаем производство в собственном цехе, фото в процессе</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num">04</div>
+        <div class="process-step__title">ОТК</div>
+        <div class="process-step__desc">Проверяем каждое изделие. Брак немедленно заменяется</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num">05</div>
+        <div class="process-step__title">Доставка</div>
+        <div class="process-step__desc">Упаковываем и отправляем по всей России или самовывоз</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEES -->
+<section class="section" style="background:var(--card-bg);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Наши обязательства</span>
+        <h2 class="display-md mt-16">Гарантии</h2>
+      </div>
+    </div>
+    <div class="grid-3" style="gap:16px;">
+      <div class="guarantee-item reveal reveal-delay-1">
+        <div class="guarantee-item__icon">✅</div>
+        <div>
+          <div class="guarantee-item__title">100% контроль ОТК</div>
+          <div class="guarantee-item__desc">Каждое изделие проходит проверку перед отгрузкой. Брак — переделываем за наш счёт.</div>
+        </div>
+      </div>
+      <div class="guarantee-item reveal reveal-delay-2">
+        <div class="guarantee-item__icon">📋</div>
+        <div>
+          <div class="guarantee-item__title">Договор и ответственность</div>
+          <div class="guarantee-item__desc">Работаем строго по договору. Сроки, объём и стоимость фиксируются письменно.</div>
+        </div>
+      </div>
+      <div class="guarantee-item reveal reveal-delay-3">
+        <div class="guarantee-item__icon">⏱️</div>
+        <div>
+          <div class="guarantee-item__title">95% заказов в срок</div>
+          <div class="guarantee-item__desc">Соблюдаем сроки производства. При нарушении — компенсация по договору.</div>
+        </div>
+      </div>
+      <div class="guarantee-item reveal reveal-delay-1">
+        <div class="guarantee-item__icon">🧪</div>
+        <div>
+          <div class="guarantee-item__title">Образцы материалов</div>
+          <div class="guarantee-item__desc">Перед запуском тиража вы получаете образцы ткани и пробный образец изделия.</div>
+        </div>
+      </div>
+      <div class="guarantee-item reveal reveal-delay-2">
+        <div class="guarantee-item__icon">📸</div>
+        <div>
+          <div class="guarantee-item__title">Фотоотчёт в процессе</div>
+          <div class="guarantee-item__desc">Отправляем фото на ключевых этапах производства — вы всегда в курсе.</div>
+        </div>
+      </div>
+      <div class="guarantee-item reveal reveal-delay-3">
+        <div class="guarantee-item__icon">🚀</div>
+        <div>
+          <div class="guarantee-item__title">Поддержка после сдачи</div>
+          <div class="guarantee-item__desc">Помогаем с повторными заказами, хранением лекал и доработкой изделий.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING CTA -->
+<section class="section">
+  <div class="container reveal">
+    <div class="pricing-block">
+      <div class="pricing-block__info">
+        <div class="pricing-block__title">Сколько стоит ваш заказ?</div>
+        <p class="pricing-block__desc">Стоимость зависит от тиража, материала и способа нанесения. Рассчитаем за 2 часа — бесплатно и без обязательств.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;align-items:stretch;">
+        <a href="index.html#cta" class="btn btn-primary btn-lg" style="justify-content:center;">Рассчитать стоимость</a>
+        <a href="https://wa.me/79999999999" target="_blank" class="btn btn-outline btn-lg" style="justify-content:center;">Написать в WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">ПРО-БЛАНК<span class="accent-dot"></span></div>
+        <p class="footer__tagline">Производство одежды и аксессуаров в Москве. Собственный цех. От 30 штук.</p>
+        <div class="footer__messengers">
+          <a href="https://wa.me/79999999999" target="_blank" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://t.me/problank_official" target="_blank" aria-label="Telegram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/problank_official" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="services.html">Пошив мерча</a></li>
+          <li><a href="services.html">Аксессуары</a></li>
+          <li><a href="services.html">Брендирование</a></li>
+          <li><a href="services.html">Экспресс-производство</a></li>
+          <li><a href="services.html#design">Разработка дизайна</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="portfolio.html">Портфолио</a></li>
+          <li><a href="showroom.html">Шоурум</a></li>
+          <li><a href="index.html#cta">Узнать цену</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="tel:+79999999999">+7 (999) 999-99-99</a></li>
+          <li><a href="mailto:info@pro-blank.ru">info@pro-blank.ru</a></li>
+          <li><a href="about.html#map">Угрешская ул., 22, Москва</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copy">© 2025 ПРО-БЛАНК. Все права защищены.</span>
+      <div class="footer__policies">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <a href="offer.html">Публичная оферта</a>
+        <a href="personal-data.html">Обработка персональных данных</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

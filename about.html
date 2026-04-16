@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>О нас — ПРО-БЛАНК | Собственный цех в Москве</title>
+  <meta name="description" content="Собственный производственный цех в Москве, ул. Угрешская, 22. История, оборудование, ценности. Работаем с 2018 года." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- ABOUT PAGE ---- */
+    .about-intro {
+      background: var(--bg-dark);
+      padding: 140px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-intro::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(200,255,0,0.07) 0%, transparent 55%),
+        linear-gradient(rgba(248,248,246,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(248,248,246,0.02) 1px, transparent 1px);
+      background-size: cover, 80px 80px, 80px 80px;
+    }
+    .about-intro__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-intro__title { color: var(--text-inv); margin-bottom: 24px; }
+    .about-intro__desc {
+      font-size: 18px;
+      color: rgba(248,248,246,0.55);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .about-intro__visual {
+      background: linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%);
+      border-radius: var(--r-xl);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      position: relative;
+    }
+    .about-intro__visual::after {
+      content: 'ЦЕХ / ПРОИЗВОДСТВО';
+      position: absolute;
+      bottom: 20px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: rgba(248,248,246,0.2);
+      text-transform: uppercase;
+    }
+    .about-intro__badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--border));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -29px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .timeline-item__year {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .timeline-item__title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .timeline-item__desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* WORKSHOP */
+    .workshop-section { background: var(--card-bg); }
+    .workshop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .workshop-visual {
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+      position: relative;
+    }
+    .workshop-visual .label-badge {
+      position: absolute;
+      top: 20px; left: 20px;
+    }
+    .workshop-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .spec-item {
+      padding: 20px;
+      background: white;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+    }
+    .spec-item__val {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .spec-item__lbl { font-size: 12px; color: var(--text-muted); }
+
+    /* VALUES */
+    .values-section { background: var(--bg-dark); }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .value-card {
+      padding: 36px 28px;
+      border-radius: var(--r-lg);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .value-card:hover {
+      background: rgba(200,255,0,0.06);
+      border-color: rgba(200,255,0,0.2);
+    }
+    .value-card__num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(248,248,246,0.2);
+      margin-bottom: 16px;
+    }
+    .value-card__title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .value-card__desc { font-size: 14px; color: rgba(248,248,246,0.5); line-height: 1.6; }
+
+    /* MAP SECTION */
+    .map-section { background: var(--card-bg); }
+    .map-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .map-info__address {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .map-info__city {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .map-contacts { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .map-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+    }
+    .map-contact-item__icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .map-contact-item a { font-weight: 500; color: var(--text); transition: color var(--transition-fast); }
+    .map-contact-item a:hover { color: var(--accent); }
+    .map-hours {
+      padding: 20px;
+      background: white;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+    }
+    .map-hours__title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .map-hours__row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .map-hours__row:last-child { border-bottom: none; }
+    .map-hours__day { color: var(--text-muted); }
+    .map-hours__time { font-weight: 500; }
+
+    @media (max-width: 900px) {
+      .about-intro__inner { grid-template-columns: 1fr; gap: 40px; }
+      .workshop-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .map-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .workshop-specs { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header dark" id="header">
+  <a href="index.html" class="header__logo">ПРО-БЛАНК<span class="accent-dot"></span></a>
+  <nav class="header__nav">
+    <a href="index.html">Главная</a>
+    <a href="services.html">Услуги</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="about.html" class="active">О нас</a>
+    <a href="showroom.html">Шоурум</a>
+  </nav>
+  <div class="header__actions">
+    <div class="header__messenger">
+      <a href="https://wa.me/79999999999" target="_blank" aria-label="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="https://t.me/problank_official" target="_blank" aria-label="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </a>
+    </div>
+    <a href="index.html#cta" class="btn btn-primary btn-sm">Узнать цену</a>
+  </div>
+  <button class="header__burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</header>
+<nav class="mobile-menu">
+  <button class="mobile-menu__close">✕</button>
+  <a href="index.html">Главная</a>
+  <a href="services.html">Услуги</a>
+  <a href="portfolio.html">Портфолио</a>
+  <a href="about.html">О нас</a>
+  <a href="showroom.html">Шоурум</a>
+  <a href="index.html#cta">Узнать цену</a>
+</nav>
+
+<!-- ABOUT INTRO -->
+<section class="about-intro">
+  <div class="container">
+    <div class="about-intro__inner">
+      <div class="reveal">
+        <div style="margin-bottom:20px;">
+          <span class="tag" style="border-color:rgba(248,248,246,0.15);color:rgba(248,248,246,0.5);">О нас</span>
+        </div>
+        <h1 class="display-lg about-intro__title">Цех в Москве.<br>Шьём то,<br>что носят.</h1>
+        <p class="about-intro__desc">
+          С 2018 года производим одежду и аксессуары для молодых брендов, агентств и корпоративных клиентов. Собственный цех — без посредников, без сюрпризов.
+        </p>
+        <div class="about-intro__badges">
+          <span class="tag" style="background:rgba(200,255,0,0.1);border-color:rgba(200,255,0,0.3);color:var(--accent);">С 2018 года</span>
+          <span class="tag" style="border-color:rgba(248,248,246,0.15);color:rgba(248,248,246,0.5);">Москва</span>
+          <span class="tag" style="border-color:rgba(248,248,246,0.15);color:rgba(248,248,246,0.5);">200+ клиентов</span>
+        </div>
+      </div>
+      <div class="about-intro__visual reveal reveal-delay-2">
+        🏭
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker dark">
+  <div class="ticker-track">
+    <span class="ticker-item">С 2018 ГОДА</span>
+    <span class="ticker-item">МОСКВА</span>
+    <span class="ticker-item">УГРЕШСКАЯ 22</span>
+    <span class="ticker-item">СОБСТВЕННЫЙ ЦЕХ</span>
+    <span class="ticker-item">200+ КЛИЕНТОВ</span>
+    <span class="ticker-item">ОТК 100%</span>
+    <span class="ticker-item">КОМАНДА ПРОФЕССИОНАЛОВ</span>
+  </div>
+</div>
+
+<!-- WORKSHOP SECTION -->
+<section class="section workshop-section">
+  <div class="container">
+    <div class="workshop-grid">
+      <div class="reveal">
+        <span class="label mb-16" style="display:block;">Наш цех</span>
+        <h2 class="display-md mb-20">Производство<br>под одной крышей</h2>
+        <p style="font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;">
+          Все этапы — раскрой, пошив, контроль качества и брендирование — происходят в нашем цехе. Никаких субподрядчиков, никаких задержек на передаче.
+        </p>
+        <p style="font-size:15px;color:var(--text-muted);line-height:1.7;">
+          Цех оснащён промышленными швейными машинами Brother и Juki, оверлоками, термопрессами и оборудованием для вышивки. Мы постоянно обновляем парк.
+        </p>
+        <div class="workshop-specs">
+          <div class="spec-item">
+            <div class="spec-item__val" data-counter data-target="600" data-suffix=" м²">600 м²</div>
+            <div class="spec-item__lbl">площадь цеха</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-item__val" data-counter data-target="24" data-suffix=" маш.">24 маш.</div>
+            <div class="spec-item__lbl">швейных машин</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-item__val" data-counter data-target="15" data-suffix=" чел.">15 чел.</div>
+            <div class="spec-item__lbl">мастеров в команде</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-item__val" data-counter data-target="7" data-suffix=" лет">7 лет</div>
+            <div class="spec-item__lbl">на рынке</div>
+          </div>
+        </div>
+      </div>
+      <div class="workshop-visual reveal reveal-delay-2">
+        <div class="label-badge"><span class="tag" style="background:rgba(200,255,0,0.9);border-color:transparent;color:#0d0d0d;">Цех · Москва</span></div>
+        🏭
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section values-section">
+  <div class="container">
+    <div class="section-header reveal" style="border-bottom:1px solid var(--border-dark);padding-bottom:40px;margin-bottom:48px;">
+      <div class="section-header__left">
+        <span class="label-accent">Принципы работы</span>
+        <h2 class="display-md mt-16 text-inv">Наши ценности</h2>
+      </div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-card__num">01</div>
+        <div class="value-card__title">Скорость</div>
+        <div class="value-card__desc">Чёткие сроки по договору. 95% заказов сдаём вовремя. Экспресс-опция для срочных проектов.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-card__num">02</div>
+        <div class="value-card__title">Качество</div>
+        <div class="value-card__desc">100% ОТК каждого изделия. Брак — переделываем за свой счёт. Без компромиссов с качеством пошива.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-card__num">03</div>
+        <div class="value-card__title">Честность</div>
+        <div class="value-card__desc">Говорим что можем — делаем что говорим. Чёткий договор, прозрачное ценообразование, никаких скрытых доплат.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-card__num">04</div>
+        <div class="value-card__title">Гибкость</div>
+        <div class="value-card__desc">Работаем с маленькими тиражами от 30 штук. Принимаем нестандартные задачи и авторские лекала.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY TIMELINE -->
+<section class="section" style="background:var(--card-bg);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">История</span>
+        <h2 class="display-md mt-16">Как мы росли</h2>
+      </div>
+    </div>
+    <div class="grid-2" style="gap:64px;">
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-item__year">2018</div>
+          <div class="timeline-item__title">Основание</div>
+          <div class="timeline-item__desc">Запустили первый цех в Москве с 3 машинами. Первый клиент — локальный streetwear-бренд.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-item__year">2019</div>
+          <div class="timeline-item__title">Первые корпоративные клиенты</div>
+          <div class="timeline-item__desc">Заключили контракты с ивент-агентствами. Расширили команду до 8 человек.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-item__year">2021</div>
+          <div class="timeline-item__title">Переезд и расширение</div>
+          <div class="timeline-item__desc">Переехали на Угрешскую. Новый цех 600 м², 24 машины, отдел вышивки и DTF-печати.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-item__year">2023</div>
+          <div class="timeline-item__title">200+ брендов-клиентов</div>
+          <div class="timeline-item__desc">Преодолели отметку 200 реализованных проектов. Запустили экспресс-производство.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-item__year">2025</div>
+          <div class="timeline-item__title">Сегодня</div>
+          <div class="timeline-item__desc">Производим мерч для молодых брендов, агентств и корпораций по всей России. Тираж от 30 штук.</div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2" style="display:flex;flex-direction:column;justify-content:center;gap:20px;">
+        <div style="background:var(--bg-dark);border-radius:var(--r-lg);padding:32px;">
+          <div class="stat-number mb-8" style="font-size:56px;color:var(--accent);" data-counter data-target="200" data-suffix="+">200+</div>
+          <div class="stat-label" style="color:rgba(248,248,246,0.4);">реализованных проектов</div>
+        </div>
+        <div style="background:var(--bg-dark);border-radius:var(--r-lg);padding:32px;">
+          <div class="stat-number mb-8" style="font-size:56px;color:var(--accent);" data-counter data-target="7" data-suffix=" лет">7 лет</div>
+          <div class="stat-label" style="color:rgba(248,248,246,0.4);">производственного опыта</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="section map-section" id="map">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Где нас найти</span>
+        <h2 class="display-md mt-16">Мы в Москве</h2>
+      </div>
+    </div>
+    <div class="map-grid">
+      <div class="reveal">
+        <div class="map-info__address">ул. Угрешская, дом 22</div>
+        <div class="map-info__city">Москва, Россия · ст. м. Дубровка</div>
+        <div class="map-contacts">
+          <div class="map-contact-item">
+            <div class="map-contact-item__icon">📞</div>
+            <div><a href="tel:+79999999999">+7 (999) 999-99-99</a></div>
+          </div>
+          <div class="map-contact-item">
+            <div class="map-contact-item__icon">📧</div>
+            <div><a href="mailto:info@pro-blank.ru">info@pro-blank.ru</a></div>
+          </div>
+          <div class="map-contact-item">
+            <div class="map-contact-item__icon">💬</div>
+            <div>
+              <a href="https://wa.me/79999999999" target="_blank">WhatsApp</a>
+              &nbsp;·&nbsp;
+              <a href="https://t.me/problank_official" target="_blank">Telegram</a>
+            </div>
+          </div>
+        </div>
+        <div class="map-hours">
+          <div class="map-hours__title">Режим работы</div>
+          <div class="map-hours__row">
+            <span class="map-hours__day">Пн — Пт</span>
+            <span class="map-hours__time">9:00 — 18:00</span>
+          </div>
+          <div class="map-hours__row">
+            <span class="map-hours__day">Суббота</span>
+            <span class="map-hours__time">10:00 — 15:00</span>
+          </div>
+          <div class="map-hours__row">
+            <span class="map-hours__day">Воскресенье</span>
+            <span class="map-hours__time">Выходной</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="map-wrapper">
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?ll=37.672%2C55.725&z=16&text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D1%83%D0%BB.%20%D0%A3%D0%B3%D1%80%D0%B5%D1%88%D1%81%D0%BA%D0%B0%D1%8F%2C%2022&pt=37.672%2C55.725%2Corg"
+            title="ПРО-БЛАНК на карте"
+            loading="lazy"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div style="margin-top:12px;text-align:right;">
+          <a href="https://yandex.ru/maps/?text=Москва+ул.+Угрешская+22" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+            Открыть в Яндекс Картах ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container text-center">
+    <div class="reveal" style="max-width:600px;margin:0 auto;">
+      <h2 class="display-md mb-24">Готовы к работе?<br>Напишите нам.</h2>
+      <p style="font-size:16px;color:var(--text-muted);margin-bottom:40px;line-height:1.6;">
+        Расскажите о вашем проекте — ответим в течение 2 часов и рассчитаем стоимость бесплатно.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html#cta" class="btn btn-primary btn-lg">Оставить заявку</a>
+        <a href="https://t.me/problank_official" target="_blank" class="btn btn-outline btn-lg">Написать в Telegram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">ПРО-БЛАНК<span class="accent-dot"></span></div>
+        <p class="footer__tagline">Производство одежды и аксессуаров в Москве. Собственный цех. От 30 штук.</p>
+        <div class="footer__messengers">
+          <a href="https://wa.me/79999999999" target="_blank" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://t.me/problank_official" target="_blank" aria-label="Telegram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/problank_official" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="services.html">Пошив мерча</a></li>
+          <li><a href="services.html">Аксессуары</a></li>
+          <li><a href="services.html">Брендирование</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="portfolio.html">Портфолио</a></li>
+          <li><a href="showroom.html">Шоурум</a></li>
+          <li><a href="index.html#cta">Узнать цену</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="tel:+79999999999">+7 (999) 999-99-99</a></li>
+          <li><a href="mailto:info@pro-blank.ru">info@pro-blank.ru</a></li>
+          <li><a href="#map">Угрешская ул., 22, Москва</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copy">© 2025 ПРО-БЛАНК. Все права защищены.</span>
+      <div class="footer__policies">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <a href="offer.html">Публичная оферта</a>
+        <a href="personal-data.html">Обработка персональных данных</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

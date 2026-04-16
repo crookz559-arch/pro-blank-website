@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Шоурум — ПРО-БЛАНК | Москва, Угрешская 22</title>
+  <meta name="description" content="Приходите в наш шоурум в Москве: потрогайте образцы, купите бланки, вдохновитесь работами и обсудите проект за кофе. Угрешская ул., 22." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- SHOWROOM PAGE ---- */
+
+    /* HERO */
+    .showroom-hero {
+      padding: 140px 0 80px;
+      background: var(--bg-dark);
+      color: var(--text-inv);
+      position: relative;
+      overflow: hidden;
+      min-height: 80vh;
+      display: flex;
+      align-items: flex-end;
+    }
+    .showroom-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 30%, rgba(200,255,0,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,255,0,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .showroom-hero__grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(248,248,246,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(248,248,246,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+    .showroom-hero__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: flex-end;
+    }
+    .showroom-hero__title {
+      font-size: clamp(72px, 12vw, 180px);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      color: var(--text-inv);
+      margin-bottom: 32px;
+    }
+    .showroom-hero__title .accent-word {
+      color: var(--accent);
+    }
+    .showroom-hero__desc {
+      font-size: clamp(15px, 1.4vw, 17px);
+      color: rgba(248,248,246,0.55);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .showroom-hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .showroom-hero__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .showroom-meta-card {
+      background: rgba(248,248,246,0.06);
+      border: 1px solid rgba(248,248,246,0.1);
+      border-radius: var(--r-lg);
+      padding: 20px 24px;
+      min-width: 200px;
+      text-align: right;
+    }
+    .showroom-meta-card__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .showroom-meta-card__val {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-inv);
+      line-height: 1.5;
+    }
+
+    /* INTRO */
+    .showroom-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .showroom-intro__title {
+      font-size: clamp(28px, 3.5vw, 46px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .showroom-intro__text {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .showroom-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .showroom-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .showroom-badge__dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* УТП CARDS */
+    .utp-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .utp-card {
+      background: rgba(248,248,246,0.04);
+      border: 1px solid rgba(248,248,246,0.1);
+      border-radius: var(--r-lg);
+      padding: 36px 32px;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .utp-card:hover {
+      border-color: rgba(200,255,0,0.4);
+      transform: translateY(-4px);
+    }
+    .utp-card__icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .utp-card__title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-inv);
+      margin-bottom: 10px;
+    }
+    .utp-card__desc {
+      font-size: 14px;
+      color: rgba(248,248,246,0.5);
+      line-height: 1.65;
+    }
+    .utp-card__accent {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .gallery-thumb {
+      position: relative;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/3;
+      background: var(--bg-dark);
+    }
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .gallery-thumb:hover img { transform: scale(1.06); }
+    .gallery-thumb__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,13,13,0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    .gallery-thumb:hover .gallery-thumb__overlay {
+      background: rgba(13,13,13,0.35);
+    }
+    .gallery-thumb__zoom {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(200,255,0,0.9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .gallery-thumb:hover .gallery-thumb__zoom {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* GALLERY LIGHTBOX */
+    .gallery-lb {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,5,5,0.95);
+      z-index: 9500;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-lb.open { display: flex; }
+    .gallery-lb__img-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-lb__img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+      user-select: none;
+    }
+    .gallery-lb__close {
+      position: fixed;
+      top: 20px; right: 24px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(248,248,246,0.1);
+      border: 1px solid rgba(248,248,246,0.2);
+      color: rgba(248,248,246,0.8);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      z-index: 1;
+    }
+    .gallery-lb__close:hover { background: rgba(248,248,246,0.2); }
+    .gallery-lb__nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(248,248,246,0.1);
+      border: 1px solid rgba(248,248,246,0.2);
+      color: rgba(248,248,246,0.8);
+      font-size: 22px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 1;
+    }
+    .gallery-lb__nav:hover { background: rgba(248,248,246,0.2); }
+    .gallery-lb__prev { left: 20px; }
+    .gallery-lb__next { right: 20px; }
+    .gallery-lb__counter {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: rgba(248,248,246,0.4);
+      z-index: 1;
+    }
+
+    /* BLANKS SECTION */
+    .blanks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .blank-card {
+      border-radius: var(--r-lg);
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      background: white;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .blank-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(200,255,0,0.1);
+      transform: translateY(-4px);
+    }
+    .blank-card__icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .blank-card__title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .blank-card__desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+    /* COFFEE CTA */
+    .coffee-cta {
+      background: var(--bg-dark);
+      border-radius: var(--r-xl);
+      padding: 72px 64px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .coffee-cta::before {
+      content: '';
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,255,0,0.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .coffee-cta__label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .coffee-cta__title {
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-inv);
+      margin-bottom: 18px;
+      line-height: 1.1;
+    }
+    .coffee-cta__desc {
+      font-size: 15px;
+      color: rgba(248,248,246,0.55);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .coffee-cta__details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .coffee-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 20px;
+      background: rgba(248,248,246,0.05);
+      border: 1px solid rgba(248,248,246,0.09);
+      border-radius: var(--r-md);
+    }
+    .coffee-detail__icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .coffee-detail__text { font-size: 14px; color: rgba(248,248,246,0.65); line-height: 1.55; }
+    .coffee-detail__text strong { color: var(--text-inv); display: block; margin-bottom: 2px; font-size: 15px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .showroom-hero__inner { grid-template-columns: 1fr; }
+      .showroom-hero__meta { flex-direction: row; align-items: flex-start; }
+      .showroom-meta-card { text-align: left; min-width: 160px; }
+      .showroom-intro { grid-template-columns: 1fr; gap: 36px; }
+      .utp-grid { grid-template-columns: 1fr 1fr; }
+      .coffee-cta { grid-template-columns: 1fr; padding: 48px 36px; }
+    }
+    @media (max-width: 700px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .blanks-grid { grid-template-columns: 1fr; }
+      .utp-grid { grid-template-columns: 1fr; }
+      .showroom-hero { min-height: auto; padding-bottom: 60px; }
+      .coffee-cta { padding: 36px 24px; gap: 36px; }
+      .showroom-hero__meta { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header dark" id="header">
+  <a href="index.html" class="header__logo">ПРО-БЛАНК<span class="accent-dot"></span></a>
+  <nav class="header__nav">
+    <a href="index.html">Главная</a>
+    <a href="services.html">Услуги</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="showroom.html" class="active">Шоурум</a>
+    <a href="about.html">О нас</a>
+  </nav>
+  <div class="header__actions">
+    <div class="header__messenger">
+      <a href="https://wa.me/79999999999" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="https://t.me/problank_official" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </a>
+    </div>
+    <a href="index.html#cta" class="btn btn-primary btn-sm">Узнать цену</a>
+  </div>
+  <button class="header__burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</header>
+<nav class="mobile-menu">
+  <button class="mobile-menu__close">✕</button>
+  <a href="index.html">Главная</a>
+  <a href="services.html">Услуги</a>
+  <a href="portfolio.html">Портфолио</a>
+  <a href="showroom.html">Шоурум</a>
+  <a href="about.html">О нас</a>
+  <a href="index.html#cta">Узнать цену</a>
+</nav>
+
+<!-- HERO -->
+<section class="showroom-hero">
+  <div class="showroom-hero__grid-bg"></div>
+  <div class="container" style="width:100%;">
+    <div class="showroom-hero__inner">
+      <div class="reveal">
+        <div style="margin-bottom:24px;">
+          <span class="tag" style="border-color:rgba(200,255,0,0.4);color:var(--accent);background:rgba(200,255,0,0.08);">Открыт для визитов</span>
+        </div>
+        <h1 class="showroom-hero__title">
+          ШОУ<span class="accent-word">РУМ</span>
+        </h1>
+        <p class="showroom-hero__desc">
+          Пространство, где можно потрогать образцы, увидеть работы вживую, купить бланк или просто вдохновиться — за чашкой кофе и без спешки.
+        </p>
+        <div class="showroom-hero__actions">
+          <a href="https://wa.me/79999999999?text=Хочу+записаться+в+шоурум" target="_blank" class="btn btn-primary btn-lg">
+            Записаться на визит
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#gallery" class="btn btn-outline-inv btn-lg">Смотреть фото</a>
+        </div>
+      </div>
+      <div class="showroom-hero__meta reveal reveal-delay-2">
+        <div class="showroom-meta-card">
+          <div class="showroom-meta-card__label">Адрес</div>
+          <div class="showroom-meta-card__val">Москва<br>Угрешская ул., 22</div>
+        </div>
+        <div class="showroom-meta-card">
+          <div class="showroom-meta-card__label">Часы работы</div>
+          <div class="showroom-meta-card__val">Пн–Пт 10:00–19:00<br>Сб 11:00–17:00</div>
+        </div>
+        <div class="showroom-meta-card">
+          <div class="showroom-meta-card__label">Вход</div>
+          <div class="showroom-meta-card__val">По записи<br>Бесплатно</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="section">
+  <div class="container">
+    <div class="showroom-intro reveal">
+      <div>
+        <span class="label" style="display:block;margin-bottom:16px;">Что такое наш шоурум</span>
+        <h2 class="showroom-intro__title">Место, где производство<br>становится осязаемым</h2>
+        <p class="showroom-intro__text">
+          Мы открыли шоурум прямо при цехе на Угрешской, чтобы вы могли видеть, трогать и примерять — а не просто смотреть на фото. Здесь хранятся образцы всех наших изделий: от базовых футболок до оверсайз худи, бомберов и аксессуаров.
+        </p>
+        <p class="showroom-intro__text">
+          Приходите с идеей или без — мы покажем всё, что умеем, расскажем про ткани и технологии, поможем определиться с фасоном и нанесением. Это живое общение, а не переписка в мессенджерах.
+        </p>
+        <div class="showroom-badges">
+          <span class="showroom-badge"><span class="showroom-badge__dot"></span>Образцы тканей</span>
+          <span class="showroom-badge"><span class="showroom-badge__dot"></span>Готовые изделия</span>
+          <span class="showroom-badge"><span class="showroom-badge__dot"></span>Работы из портфолио</span>
+          <span class="showroom-badge"><span class="showroom-badge__dot"></span>Бланки в наличии</span>
+          <span class="showroom-badge"><span class="showroom-badge__dot"></span>Кофе и напитки</span>
+        </div>
+      </div>
+      <div>
+        <!-- Big stat block -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="background:var(--bg-dark);border-radius:var(--r-lg);padding:32px 24px;text-align:center;">
+            <div class="stat-number" style="font-size:48px;color:var(--accent);margin-bottom:8px;">50+</div>
+            <div style="font-size:13px;color:rgba(248,248,246,0.4);line-height:1.5;">образцов<br>изделий</div>
+          </div>
+          <div style="background:var(--card-bg);border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid var(--border);">
+            <div class="stat-number" style="font-size:48px;margin-bottom:8px;">20+</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.5;">видов<br>тканей</div>
+          </div>
+          <div style="background:var(--card-bg);border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid var(--border);">
+            <div class="stat-number" style="font-size:48px;margin-bottom:8px;">0 ₽</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.5;">вход<br>бесплатный</div>
+          </div>
+          <div style="background:var(--bg-dark);border-radius:var(--r-lg);padding:32px 24px;text-align:center;">
+            <div class="stat-number" style="font-size:48px;color:var(--accent);margin-bottom:8px;">☕</div>
+            <div style="font-size:13px;color:rgba(248,248,246,0.4);line-height:1.5;">кофе<br>за нами</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- УТП -->
+<section class="section" style="background:var(--bg-dark);color:var(--text-inv);">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:48px;">
+      <div class="section-header__left">
+        <span class="label-accent">Зачем приходить</span>
+        <h2 class="display-md mt-16" style="color:var(--text-inv);">4 причины<br>приехать к нам</h2>
+      </div>
+    </div>
+    <div class="utp-grid">
+      <div class="utp-card reveal reveal-delay-1">
+        <span class="utp-card__icon">👐</span>
+        <div class="utp-card__title">Потрогать и примерить</div>
+        <p class="utp-card__desc">Фото не передаёт ощущение ткани. У нас можно взять в руки любой образец: проверить плотность, посмотреть качество швов, примерить фасон и реальный размер перед заказом тиража.</p>
+        <span class="utp-card__accent">→ никаких сюрпризов при получении</span>
+      </div>
+      <div class="utp-card reveal reveal-delay-2">
+        <span class="utp-card__icon">🛍️</span>
+        <div class="utp-card__title">Купить или забрать сразу</div>
+        <p class="utp-card__desc">В шоуруме всегда есть бланки — базовые изделия без нанесения, а также остатки с прошлых тиражей. Понравилось изделие из нашего портфолио? Его можно купить, повторить в своём брендинге или сделать аналог.</p>
+        <span class="utp-card__accent">→ без ожидания, без минимального тиража</span>
+      </div>
+      <div class="utp-card reveal reveal-delay-3">
+        <span class="utp-card__icon">✨</span>
+        <div class="utp-card__title">Вдохновиться вживую</div>
+        <p class="utp-card__desc">Смотрите работы из наших реальных заказов — худи для МТС, стрит-коллекцию Neverend, корпоративные бомберы. Увидите качество вышивки, текстуру DTF-печати и подбор материалов на живых изделиях.</p>
+        <span class="utp-card__accent">→ 200+ реализованных проектов в наличии</span>
+      </div>
+      <div class="utp-card reveal reveal-delay-4">
+        <span class="utp-card__icon">☕</span>
+        <div class="utp-card__title">Обсудить проект за кофе</div>
+        <p class="utp-card__desc">Никакого формализма. Угостим кофе или напитками, покажем всё не торопясь, ответим на любые вопросы. Хотите — сразу набросаем бриф и уйдёте с пониманием сроков и стоимости.</p>
+        <span class="utp-card__accent">→ живое общение без скриптов</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" id="gallery" style="background:var(--card-bg);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Атмосфера и работы</span>
+        <h2 class="display-md mt-16">Как это выглядит</h2>
+        <p class="section-header__desc">Фото шоурума и образцов изделий. Нажмите на любое, чтобы открыть галерею.</p>
+      </div>
+    </div>
+    <div class="gallery-grid reveal">
+      <!-- Замените src на реальные фотографии шоурума -->
+      <div class="gallery-thumb" data-idx="0">
+        <img src="img/portfolio/mts-merch1.jpg" alt="Шоурум — образцы одежды" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="1">
+        <img src="img/portfolio/neverend-1.jpg" alt="Шоурум — худи оверсайз" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="2">
+        <img src="img/portfolio/betcity-1.jpg" alt="Шоурум — корпоративный мерч" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="3">
+        <img src="img/portfolio/mtstyedye-1.jpg" alt="Шоурум — тай-дай коллекция" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="4">
+        <img src="img/portfolio/chingate-hoodie1.jpg" alt="Шоурум — авторские принты" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="5">
+        <img src="img/portfolio/dobrofon-1.jpg" alt="Шоурум — корпоративная форма" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="6">
+        <img src="img/portfolio/magnit-bomber1.jpg" alt="Шоурум — бомберы" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="7">
+        <img src="img/portfolio/flashin-cos1.jpg" alt="Шоурум — промо-костюмы" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+      <div class="gallery-thumb" data-idx="8">
+        <img src="img/portfolio/terratb1.jpg" alt="Шоурум — рабочая одежда" loading="lazy">
+        <div class="gallery-thumb__overlay"><div class="gallery-thumb__zoom">⊕</div></div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:20px;">
+      📸 Фотографии шоурума — скоро добавим. Пока показываем образцы работ из портфолио.
+    </p>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="gallery-lb" id="galleryLb" role="dialog" aria-modal="true" aria-label="Галерея">
+  <button class="gallery-lb__close" id="lbClose" aria-label="Закрыть">✕</button>
+  <button class="gallery-lb__nav gallery-lb__prev" id="lbPrev" aria-label="Предыдущее">‹</button>
+  <div class="gallery-lb__img-wrap">
+    <img class="gallery-lb__img" id="lbImg" src="" alt="">
+  </div>
+  <button class="gallery-lb__nav gallery-lb__next" id="lbNext" aria-label="Следующее">›</button>
+  <div class="gallery-lb__counter" id="lbCounter"></div>
+</div>
+
+<!-- BLANKS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Что можно взять или повторить</span>
+        <h2 class="display-md mt-16">Бланки и изделия<br>в наличии</h2>
+        <p class="section-header__desc">Не обязательно ждать тираж. Приходите и уходите с вещью.</p>
+      </div>
+    </div>
+    <div class="blanks-grid">
+      <div class="blank-card reveal reveal-delay-1">
+        <span class="blank-card__icon">📦</span>
+        <div class="blank-card__title">Бланковые вещи</div>
+        <p class="blank-card__desc">Базовые изделия без нанесения: футболки, худи, свитшоты, кепки. Качественный крой и ткань по нашим стандартам — можете использовать как есть или нанести свой принт.</p>
+      </div>
+      <div class="blank-card reveal reveal-delay-2">
+        <span class="blank-card__icon">🔁</span>
+        <div class="blank-card__title">Остатки с заказов</div>
+        <p class="blank-card__desc">После каждого тиража остаются единицы — с вышивкой, принтом или в чистом виде. Часто это уникальные вещи, которых больше не будет. Смотрите, что есть в наличии прямо сейчас.</p>
+      </div>
+      <div class="blank-card reveal reveal-delay-3">
+        <span class="blank-card__icon">✂️</span>
+        <div class="blank-card__title">Повторить или вдохновиться</div>
+        <p class="blank-card__desc">Увидели что-то в портфолио или прямо в шоуруме? Мы можем повторить любое изделие в вашем брендинге, сделать аналог с другим нанесением или взять за основу фасон и создать что-то своё.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COFFEE CTA -->
+<section class="section">
+  <div class="container">
+    <div class="coffee-cta reveal">
+      <div>
+        <span class="coffee-cta__label">Приходите к нам</span>
+        <h2 class="coffee-cta__title">За чашкой кофе — к готовому заказу</h2>
+        <p class="coffee-cta__desc">
+          Мы не делаем из визита официальное мероприятие. Приходите как есть — с идеей, референсами или просто посмотреть. Расскажем всё, покажем вживую, угостим кофе и поможем выбрать лучшее решение для вашего проекта.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="https://wa.me/79999999999?text=Хочу+записаться+в+шоурум+ПРО-БЛАНК" target="_blank" class="btn btn-primary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Написать в WhatsApp
+          </a>
+          <a href="https://t.me/problank_official" target="_blank" class="btn btn-outline-inv btn-lg">Написать в Telegram</a>
+        </div>
+      </div>
+      <div class="coffee-cta__details">
+        <div class="coffee-detail">
+          <span class="coffee-detail__icon">📍</span>
+          <div class="coffee-detail__text">
+            <strong>Адрес</strong>
+            Москва, Угрешская ул., 22 — прямо при производственном цехе
+          </div>
+        </div>
+        <div class="coffee-detail">
+          <span class="coffee-detail__icon">🕐</span>
+          <div class="coffee-detail__text">
+            <strong>Часы работы</strong>
+            Пн–Пт 10:00–19:00 · Сб 11:00–17:00 · По записи
+          </div>
+        </div>
+        <div class="coffee-detail">
+          <span class="coffee-detail__icon">☕</span>
+          <div class="coffee-detail__text">
+            <strong>Угощаем</strong>
+            Кофе, чай и прохладительные напитки — всё за наш счёт
+          </div>
+        </div>
+        <div class="coffee-detail">
+          <span class="coffee-detail__icon">🎯</span>
+          <div class="coffee-detail__text">
+            <strong>Результат визита</strong>
+            Уйдёте с чётким пониманием материала, фасона, сроков и цены
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">ПРО-БЛАНК<span class="accent-dot"></span></div>
+        <p class="footer__tagline">Производство одежды и аксессуаров в Москве. Собственный цех. От 30 штук.</p>
+        <div class="footer__messengers">
+          <a href="https://wa.me/79999999999" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://t.me/problank_official" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/problank_official" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="services.html">Пошив мерча</a></li>
+          <li><a href="services.html">Аксессуары</a></li>
+          <li><a href="services.html">Брендирование</a></li>
+          <li><a href="services.html#design">Разработка дизайна</a></li>
+          <li><a href="services.html#patterns">Разработка лекал</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="portfolio.html">Портфолио</a></li>
+          <li><a href="showroom.html">Шоурум</a></li>
+          <li><a href="index.html#cta">Узнать цену</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="tel:+79999999999">+7 (999) 999-99-99</a></li>
+          <li><a href="mailto:info@pro-blank.ru">info@pro-blank.ru</a></li>
+          <li><a href="about.html#map">Угрешская ул., 22, Москва</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copy">© 2025 ПРО-БЛАНК. Все права защищены.</span>
+      <div class="footer__policies">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <a href="offer.html">Публичная оферта</a>
+        <a href="personal-data.html">Обработка персональных данных</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script>
+/* ===== GALLERY LIGHTBOX ===== */
+(function() {
+  const thumbs = Array.from(document.querySelectorAll('.gallery-thumb'));
+  const lb     = document.getElementById('galleryLb');
+  const lbImg  = document.getElementById('lbImg');
+  const lbCnt  = document.getElementById('lbCounter');
+  const lbClose = document.getElementById('lbClose');
+  const lbPrev  = document.getElementById('lbPrev');
+  const lbNext  = document.getElementById('lbNext');
+  if (!lb || !thumbs.length) return;
+
+  // Собираем полные src из thumbnail-ов
+  const images = thumbs.map(t => ({
+    src: t.querySelector('img').src,
+    alt: t.querySelector('img').alt
+  }));
+
+  let current = 0;
+
+  function show(idx) {
+    current = (idx + images.length) % images.length;
+    lbImg.src = images[current].src;
+    lbImg.alt = images[current].alt;
+    lbCnt.textContent = (current + 1) + ' / ' + images.length;
+  }
+
+  function open(idx) {
+    show(idx);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    // Сбрасываем src чтобы не держать в памяти
+    setTimeout(() => { lbImg.src = ''; }, 300);
+  }
+
+  thumbs.forEach(t => {
+    t.addEventListener('click', () => open(parseInt(t.dataset.idx)));
+  });
+
+  lbClose.addEventListener('click', close);
+  lbPrev.addEventListener('click', () => show(current - 1));
+  lbNext.addEventListener('click', () => show(current + 1));
+
+  lb.addEventListener('click', e => {
+    if (e.target === lb) close();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  // Touch swipe
+  let touchX = 0;
+  lb.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) show(dx < 0 ? current + 1 : current - 1);
+  });
+})();
+</script>
+</body>
+</html>

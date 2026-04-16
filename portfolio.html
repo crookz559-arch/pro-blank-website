@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Портфолио — ПРО-БЛАНК | Кейсы и примеры работ</title>
+  <meta name="description" content="Реальные проекты ПРО-БЛАНК: мерч для брендов, аксессуары для ивентов, промо для корпораций. Посмотрите наши работы." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- PORTFOLIO PAGE ---- */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .filter-btn {
+      padding: 9px 20px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .filter-btn:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+    .filter-btn.active {
+      background: var(--bg-dark);
+      border-color: var(--bg-dark);
+      color: var(--text-inv);
+    }
+
+    /* PORTFOLIO MASONRY */
+    .portfolio-masonry {
+      columns: 3;
+      column-gap: 20px;
+    }
+    .portfolio-item {
+      break-inside: avoid;
+      margin-bottom: 20px;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform var(--transition);
+    }
+    .portfolio-item:hover { transform: scale(1.02); }
+    .portfolio-item__img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform var(--transition);
+    }
+    .portfolio-item:hover .portfolio-item__img { transform: scale(1.05); }
+    .portfolio-item__placeholder {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+    }
+    .portfolio-item__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0.2) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .portfolio-item:hover .portfolio-item__overlay { opacity: 1; }
+    .portfolio-item__cat {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .portfolio-item__name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .portfolio-item__desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+    .portfolio-item__tag {
+      position: absolute;
+      top: 16px; left: 16px;
+      padding: 4px 12px;
+      background: rgba(13,13,13,0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(248,248,246,0.7);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* CASE STUDY HIGHLIGHT */
+    .case-highlight {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      padding: 60px;
+      background: var(--bg-dark);
+      border-radius: var(--r-xl);
+      color: var(--text-inv);
+      margin-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .case-highlight::before {
+      content: '';
+      position: absolute;
+      right: 0; top: 0;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(200,255,0,0.07) 0%, transparent 60%);
+    }
+    .case-highlight__visual {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: #1a1a2e;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+    }
+    .case-highlight__label { margin-bottom: 16px; }
+    .case-highlight__title {
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: white;
+      margin-bottom: 16px;
+    }
+    .case-highlight__desc {
+      font-size: 15px;
+      color: rgba(248,248,246,0.55);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .case-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .case-stat__num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .case-stat__label { font-size: 12px; color: rgba(248,248,246,0.4); margin-top: 4px; }
+
+    /* CLIENTS -->
+    .clients-section { background: var(--card-bg); }
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      align-items: center;
+    }
+    .client-logo {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80px;
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+    .client-logo:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .client-logo span {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* NICHE TABS */
+    .niche-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .niche-card {
+      padding: 36px 32px;
+      border-radius: var(--r-lg);
+      background: white;
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+    .niche-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+      transform: translateY(-4px);
+    }
+    .niche-card__icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .niche-card__title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .niche-card__desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    @media (max-width: 1000px) {
+      .portfolio-masonry { columns: 2; }
+      .case-highlight { grid-template-columns: 1fr; padding: 40px; }
+      .clients-grid { grid-template-columns: repeat(3, 1fr); }
+      .niche-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .portfolio-masonry { columns: 1; }
+      .clients-grid { grid-template-columns: repeat(2, 1fr); }
+      .case-highlight { padding: 28px; }
+      /* Фильтр-кнопки переносятся на 2 строки */
+      .filter-tabs { gap: 6px; }
+      .filter-btn { padding: 8px 14px; font-size: 12px; }
+    }
+    @media (max-width: 380px) {
+      .case-highlight { padding: 20px; }
+      .case-highlight__title { font-size: 22px; }
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(5,5,5,0.95);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal {
+      position: relative;
+      width: 100%; max-width: 880px;
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+    }
+    .modal__close {
+      position: absolute; top: -48px; right: 0;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(248,248,246,0.7);
+      font-size: 15px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal__close:hover { background: rgba(255,255,255,0.16); color: #fff; }
+    .modal__stage {
+      position: relative; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal__img-wrap {
+      width: 100%; max-height: 64vh;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 16px; overflow: hidden; background: #111;
+    }
+    .modal__img {
+      max-width: 100%; max-height: 64vh;
+      width: auto; height: auto;
+      object-fit: contain; display: block;
+      transition: opacity 0.18s ease;
+    }
+    .modal__img.fading { opacity: 0; }
+    .modal__arr {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(13,13,13,0.72);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; backdrop-filter: blur(8px); z-index: 2;
+    }
+    .modal__arr:hover:not(:disabled) {
+      background: rgba(200,255,0,0.12);
+      border-color: #C8FF00; color: #C8FF00;
+    }
+    .modal__arr:disabled { opacity: 0.2; cursor: default; }
+    .modal__arr--prev { left: -60px; }
+    .modal__arr--next { right: -60px; }
+    .modal__footer {
+      width: 100%; margin-top: 18px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;
+    }
+    .modal__cat {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #C8FF00; margin-bottom: 4px;
+    }
+    .modal__title {
+      font-family: var(--font-display); font-size: 24px;
+      font-weight: 700; color: #fff;
+      letter-spacing: -0.02em; margin-bottom: 4px;
+    }
+    .modal__desc-text { font-size: 13px; color: rgba(248,248,246,0.45); line-height: 1.55; }
+    .modal__right { text-align: right; flex-shrink: 0; }
+    .modal__counter {
+      font-family: var(--font-mono); font-size: 11px;
+      color: rgba(248,248,246,0.32); margin-bottom: 8px;
+    }
+    .modal__dots { display: flex; gap: 5px; justify-content: flex-end; flex-wrap: wrap; max-width: 140px; }
+    .modal__dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .modal__dot.active { background: #C8FF00; transform: scale(1.35); }
+    /* hover cursor on cards */
+    .portfolio-item { cursor: pointer; }
+    /* Touch: overlay always visible (no hover on mobile) */
+    @media (hover: none), (max-width: 600px) {
+      .portfolio-item__overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(13,13,13,0.82) 0%, rgba(13,13,13,0.1) 55%, transparent 100%);
+      }
+    }
+    @media (max-width: 1000px) {
+      .modal__arr--prev { left: -36px; }
+      .modal__arr--next { right: -36px; }
+    }
+    @media (max-width: 700px) {
+      .modal-overlay { padding: 14px; }
+      .modal__arr--prev { left: 6px; }
+      .modal__arr--next { right: 6px; }
+      .modal__arr { background: rgba(13,13,13,0.82); }
+      .modal__img { max-height: 50vh; }
+      .modal__img-wrap { max-height: 50vh; }
+      .modal__footer { flex-direction: column; gap: 10px; }
+      .modal__right { text-align: left; }
+      .modal__dots { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header dark" id="header">
+  <a href="index.html" class="header__logo">ПРО-БЛАНК<span class="accent-dot"></span></a>
+  <nav class="header__nav">
+    <a href="index.html">Главная</a>
+    <a href="services.html">Услуги</a>
+    <a href="portfolio.html" class="active">Портфолио</a>
+    <a href="about.html">О нас</a>
+    <a href="showroom.html">Шоурум</a>
+  </nav>
+  <div class="header__actions">
+    <div class="header__messenger">
+      <a href="https://wa.me/79999999999" target="_blank" aria-label="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="https://t.me/problank_official" target="_blank" aria-label="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </a>
+    </div>
+    <a href="index.html#cta" class="btn btn-primary btn-sm">Узнать цену</a>
+  </div>
+  <button class="header__burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</header>
+<nav class="mobile-menu">
+  <button class="mobile-menu__close">✕</button>
+  <a href="index.html">Главная</a>
+  <a href="services.html">Услуги</a>
+  <a href="portfolio.html">Портфолио</a>
+  <a href="about.html">О нас</a>
+  <a href="showroom.html">Шоурум</a>
+  <a href="index.html#cta">Узнать цену</a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero__label"><span class="tag">Портфолио</span></div>
+    <h1 class="display-lg page-hero__title reveal">200+ проектов.<br>Реальные результаты.</h1>
+    <p class="page-hero__sub reveal reveal-delay-1">
+      Мерч для стрит-брендов, форма для корпораций, аксессуары для фестивалей — смотрите, что мы умеем.
+    </p>
+  </div>
+</section>
+
+<!-- FILTER + GRID -->
+<section class="section">
+  <div class="container">
+    <div class="filter-bar reveal" id="filterBar">
+      <button class="filter-btn active" data-filter="all">Все работы</button>
+      <button class="filter-btn" data-filter="merch">Мерч</button>
+      <button class="filter-btn" data-filter="accessories">Аксессуары</button>
+      <button class="filter-btn" data-filter="branding">Брендирование</button>
+      <button class="filter-btn" data-filter="promo">Промо</button>
+      <button class="filter-btn" data-filter="events">Ивенты</button>
+    </div>
+
+    <div class="portfolio-masonry reveal" id="portfolioGrid">
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/mts-merch1.jpg" alt="МТС корпоративный мерч" loading="lazy" style="height:360px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Телеком</div>
+          <div class="portfolio-item__name">МТС</div>
+          <div class="portfolio-item__desc">Корпоративный мерч: худи, футболки, олимпийки с вышивкой</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="merch">
+        <div class="portfolio-item__tag">Мерч</div>
+        <img class="portfolio-item__img" src="img/portfolio/neverend-1.jpg" alt="Neverend streetwear" loading="lazy" style="height:260px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Мерч / Streetwear</div>
+          <div class="portfolio-item__name">Neverend</div>
+          <div class="portfolio-item__desc">Стрит-коллекция: оверсайз худи, авторские принты, лимитированный тираж</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/betcity-1.jpg" alt="BetCity корпоративный мерч" loading="lazy" style="height:320px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Спорт</div>
+          <div class="portfolio-item__name">BetCity</div>
+          <div class="portfolio-item__desc">Промо-форма для сотрудников и партнёров сети</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="promo">
+        <div class="portfolio-item__tag">Промо</div>
+        <img class="portfolio-item__img" src="img/portfolio/mtstyedye-1.jpg" alt="МТС тай-дай лимитированный дроп" loading="lazy" style="height:300px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Промо / Лимитированный дроп</div>
+          <div class="portfolio-item__name">МТС × Tie-Dye</div>
+          <div class="portfolio-item__desc">Лимитированный дроп: тай-дай худи и футболки</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="merch">
+        <div class="portfolio-item__tag">Мерч</div>
+        <img class="portfolio-item__img" src="img/portfolio/chingate-hoodie1.jpg" alt="Chingate худи" loading="lazy" style="height:380px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Мерч / Streetwear</div>
+          <div class="portfolio-item__name">Chingate</div>
+          <div class="portfolio-item__desc">Линейка оверсайз худи с авторскими принтами</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="accessories">
+        <div class="portfolio-item__tag">Аксессуары</div>
+        <img class="portfolio-item__img" src="img/portfolio/batonchik-bag1.jpg" alt="Батончик сумки" loading="lazy" style="height:240px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Аксессуары / Сумки</div>
+          <div class="portfolio-item__name">Батончик</div>
+          <div class="portfolio-item__desc">Брендированные шопперы и промо-сумки с логотипом</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/dobrofon-1.jpg" alt="Доброфон корпоративная форма" loading="lazy" style="height:280px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Телеком</div>
+          <div class="portfolio-item__name">Доброфон</div>
+          <div class="portfolio-item__desc">Фирменная форма и промо-мерч телеком-оператора</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/magnit-bomber1.jpg" alt="Магнит бомбер" loading="lazy" style="height:340px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Ритейл</div>
+          <div class="portfolio-item__name">Магнит</div>
+          <div class="portfolio-item__desc">Корпоративные бомберы для сотрудников сети</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="promo">
+        <div class="portfolio-item__tag">Промо</div>
+        <img class="portfolio-item__img" src="img/portfolio/yaeda-1.jpg" alt="Яеда промо-мерч" loading="lazy" style="height:260px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Промо / Доставка</div>
+          <div class="portfolio-item__name">Яеда</div>
+          <div class="portfolio-item__desc">Промо-мерч для курьеров и корпоративных мероприятий</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/lukoil-bomber1.jpg" alt="Лукойл бомбер" loading="lazy" style="height:320px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Нефтегаз</div>
+          <div class="portfolio-item__name">Лукойл</div>
+          <div class="portfolio-item__desc">Корпоративный бомбер с вышивкой для сети АЗС</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="events">
+        <div class="portfolio-item__tag">Ивент</div>
+        <img class="portfolio-item__img" src="img/portfolio/flashin-cos1.jpg" alt="Flashin промо-костюм" loading="lazy" style="height:360px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Ивент / Промо</div>
+          <div class="portfolio-item__name">Flashin</div>
+          <div class="portfolio-item__desc">Промо-костюм для мероприятий и активаций бренда</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="accessories">
+        <div class="portfolio-item__tag">Аксессуары</div>
+        <img class="portfolio-item__img" src="img/portfolio/batochik-vest1.jpg" alt="Батончик жилет" loading="lazy" style="height:240px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Аксессуары / Жилет</div>
+          <div class="portfolio-item__name">Батончик</div>
+          <div class="portfolio-item__desc">Промо-жилеты с DTF-печатью для полевой команды</div>
+        </div>
+      </div>
+
+    </div><!-- /portfolio-masonry (первые 12 проектов) -->
+
+    <!-- CTA: Смотреть ещё -->
+    <div style="display:flex;justify-content:center;margin-top:40px;margin-bottom:8px;">
+      <button class="btn btn-outline" id="portfolioMoreBtn" aria-expanded="false">
+        Смотреть ещё
+        <svg id="portfolioMoreIcon" viewBox="0 0 16 16" fill="none" width="16" height="16" style="transition:transform 0.3s;">
+          <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Скрытые проекты — сюда добавляй новые -->
+    <div class="portfolio-masonry" id="portfolioExtra" style="display:none;margin-top:24px;">
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/lada-vest1.jpg" alt="Лада жилет" loading="lazy" style="height:280px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Авто</div>
+          <div class="portfolio-item__name">Лада</div>
+          <div class="portfolio-item__desc">Корпоративный жилет для официальных дилеров</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/rosdetcenter-1.jpg" alt="Росдетцентр форма" loading="lazy" style="height:300px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Соцсфера</div>
+          <div class="portfolio-item__name">Росдетцентр</div>
+          <div class="portfolio-item__desc">Форменная одежда для педагогов и вожатых</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/trzhd-1.jpg" alt="ТР ЖД корпоративная форма" loading="lazy" style="height:340px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Транспорт</div>
+          <div class="portfolio-item__name">ТР ЖД</div>
+          <div class="portfolio-item__desc">Корпоративная форма для сотрудников транспортной компании</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-category="branding">
+        <div class="portfolio-item__tag">Брендинг</div>
+        <img class="portfolio-item__img" src="img/portfolio/terratb1.jpg" alt="Terra TB брендирование" loading="lazy" style="height:260px;">
+        <div class="portfolio-item__overlay">
+          <div class="portfolio-item__cat">Корпоратив / Брендинг</div>
+          <div class="portfolio-item__name">Terra TB</div>
+          <div class="portfolio-item__desc">Брендированная рабочая одежда для команды</div>
+        </div>
+      </div>
+
+    </div><!-- /portfolioExtra -->
+
+    <!-- FEATURED CASE STUDY -->
+    <div class="case-highlight reveal">
+      <div class="case-highlight__visual" style="background:#111;">
+        <img src="img/portfolio/mtstyedye-1.jpg" alt="МТС Tie-Dye" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div>
+        <div class="case-highlight__label">
+          <span class="tag accent">Кейс</span>
+        </div>
+        <h2 class="case-highlight__title">МТС × Tie-Dye — лимитированный дроп</h2>
+        <p class="case-highlight__desc">
+          Один из крупнейших телеком-операторов России поставил нетривиальную задачу: лимитированный мерч в технике тай-дай для внутренней кампании. Мы разработали авторскую технику окрашивания, подобрали состав ткани и реализовали тираж за 10 рабочих дней — без единого брака.
+        </p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <span class="tag">Тай-дай окрашивание</span>
+          <span class="tag">Вышивка логотипа</span>
+          <span class="tag">Хлопок 280 г/м²</span>
+          <span class="tag">10 дней</span>
+        </div>
+        <div class="case-stats">
+          <div class="case-stat">
+            <div class="case-stat__num">300</div>
+            <div class="case-stat__label">единиц в тираже</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-stat__num">10</div>
+            <div class="case-stat__label">рабочих дней</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-stat__num">0</div>
+            <div class="case-stat__label">брак при ОТК</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NICHES -->
+<section class="section" style="background:var(--card-bg);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-header__left">
+        <span class="label">Кому мы делаем</span>
+        <h2 class="display-md mt-16">Работаем<br>в любой нише</h2>
+      </div>
+    </div>
+    <div class="niche-grid">
+      <div class="niche-card reveal reveal-delay-1">
+        <span class="niche-card__icon">🎨</span>
+        <div class="niche-card__title">Стрит и fashion-бренды</div>
+        <div class="niche-card__desc">Маленькие тиражи, авторские лекала, нестандартные решения — мы помогаем молодым брендам запустить первую коллекцию.</div>
+      </div>
+      <div class="niche-card reveal reveal-delay-2">
+        <span class="niche-card__icon">🏢</span>
+        <div class="niche-card__title">Корпоративные клиенты</div>
+        <div class="niche-card__desc">Форменная одежда, промо-форма, сувенирная продукция для сотрудников и партнёров. Под ключ с брендированием.</div>
+      </div>
+      <div class="niche-card reveal reveal-delay-1">
+        <span class="niche-card__icon">🎪</span>
+        <div class="niche-card__title">Ивент-агентства</div>
+        <div class="niche-card__desc">Фестивали, концерты, форумы, выставки — оперативный мерч под мероприятие с чёткими сроками сдачи.</div>
+      </div>
+      <div class="niche-card reveal reveal-delay-2">
+        <span class="niche-card__icon">📱</span>
+        <div class="niche-card__title">Блогеры и комьюнити</div>
+        <div class="niche-card__desc">Мерч для аудитории: от 30 штук. Экономим на маленьких тиражах, помогаем с дизайном и упаковкой.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="section">
+  <div class="container text-center">
+    <div class="reveal" style="max-width:640px;margin:0 auto;">
+      <span class="label mb-16" style="display:block;">Готовы начать?</span>
+      <h2 class="display-md mb-24">Ваш проект<br>тоже будет здесь</h2>
+      <p style="font-size:16px;color:var(--text-muted);margin-bottom:40px;line-height:1.6;">
+        Оставьте заявку — расскажите о задаче, и мы рассчитаем стоимость и сроки бесплатно.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="index.html#cta" class="btn btn-primary btn-lg">Узнать цену мерч</a>
+        <a href="https://wa.me/79999999999" target="_blank" class="btn btn-outline btn-lg">Написать нам</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">ПРО-БЛАНК<span class="accent-dot"></span></div>
+        <p class="footer__tagline">Производство одежды и аксессуаров в Москве. Собственный цех. От 30 штук.</p>
+        <div class="footer__messengers">
+          <a href="https://wa.me/79999999999" target="_blank" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://t.me/problank_official" target="_blank" aria-label="Telegram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/problank_official" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="services.html">Пошив мерча</a></li>
+          <li><a href="services.html">Аксессуары</a></li>
+          <li><a href="services.html">Брендирование</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="portfolio.html">Портфолио</a></li>
+          <li><a href="showroom.html">Шоурум</a></li>
+          <li><a href="index.html#cta">Узнать цену</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="tel:+79999999999">+7 (999) 999-99-99</a></li>
+          <li><a href="mailto:info@pro-blank.ru">info@pro-blank.ru</a></li>
+          <li><a href="about.html#map">Угрешская ул., 22, Москва</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copy">© 2025 ПРО-БЛАНК. Все права защищены.</span>
+      <div class="footer__policies">
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <a href="offer.html">Публичная оферта</a>
+        <a href="personal-data.html">Обработка персональных данных</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== PROJECT MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Просмотр проекта">
+  <div class="modal" id="modal">
+    <button class="modal__close" id="modalClose" aria-label="Закрыть">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div class="modal__stage">
+      <button class="modal__arr modal__arr--prev" id="modalPrev" aria-label="Назад">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="modal__img-wrap">
+        <img class="modal__img" id="modalImg" src="" alt="">
+      </div>
+      <button class="modal__arr modal__arr--next" id="modalNext" aria-label="Вперёд">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="modal__footer">
+      <div class="modal__info">
+        <div class="modal__cat"   id="modalCat"></div>
+        <div class="modal__title" id="modalTitle"></div>
+        <div class="modal__desc-text" id="modalDescText"></div>
+      </div>
+      <div class="modal__right">
+        <div class="modal__counter" id="modalCounter">1 / 1</div>
+        <div class="modal__dots"   id="modalDots"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js" defer></script>
+<script>
+/* ===== PROJECT DATA ===== */
+const PROJECTS = {
+  'mts':           { name:'МТС',           cat:'Корпоратив / Телеком',        desc:'Корпоративный мерч: худи, футболки, олимпийки с вышивкой', images:['mts-merch1.jpg','mts-merch2.jpg','mts-merch3.jpg','mts-merch4.jpg'] },
+  'neverend':      { name:'Neverend',       cat:'Мерч / Streetwear',           desc:'Стрит-коллекция: оверсайз худи, авторские принты, лимитированный тираж', images:['neverend-1.jpg','neverend-2.jpg','neverend-3.jpg','neverend-4.jpg','neverend-5.jpg','neverend-6.jpg','neverend-7.jpg'] },
+  'betcity':       { name:'BetCity',        cat:'Корпоратив / Спорт',          desc:'Промо-форма для сотрудников и партнёров сети', images:['betcity-1.jpg','betcity-2.jpg','betcity-3.jpg','betcity-4.jpg','betcity-5.jpg','betcity-6.jpg'] },
+  'mtstyedye':     { name:'МТС × Tie-Dye', cat:'Промо / Лимитированный дроп', desc:'Лимитированный дроп: тай-дай худи и футболки', images:['mtstyedye-1.jpg','mtstyedye-2.jpg','mtstyedye-3.jpg','mtstyedye-4.jpg','mtstyedye-5.jpg','mtstyedye-6.jpg','mtstyedye-7.jpg'] },
+  'chingate':      { name:'Chingate',       cat:'Мерч / Streetwear',           desc:'Линейка оверсайз худи с авторскими принтами', images:['chingate-hoodie1.jpg','chingate-hoodie2.jpg','chingate-hoodie3.jpg','chingate-hoodie4.jpg','chingate-hoodie5.jpg'] },
+  'batonchik-bag': { name:'Батончик',       cat:'Аксессуары / Сумки',          desc:'Брендированные шопперы и промо-сумки с логотипом', images:['batonchik-bag1.jpg','batonchik-bag2.jpg','batonchik-bag3.jpg'] },
+  'dobrofon':      { name:'Доброфон',       cat:'Корпоратив / Телеком',        desc:'Фирменная форма и промо-мерч телеком-оператора', images:['dobrofon-1.jpg','dobrofon-2.jpg','dobrofon-3.jpg','dobrofon-4.jpg','dobrofon-5.jpg','dobrofon-6.jpg'] },
+  'magnit':        { name:'Магнит',         cat:'Корпоратив / Ритейл',         desc:'Корпоративные бомберы для сотрудников сети', images:['magnit-bomber1.jpg','magnit-bomber2.jpg','magnit-bomber3.jpg'] },
+  'yaeda':         { name:'Яеда',           cat:'Промо / Доставка',            desc:'Промо-мерч для курьеров и корпоративных мероприятий', images:['yaeda-1.jpg','yaeda-2.jpg','yaeda-3.jpg'] },
+  'lukoil':        { name:'Лукойл',         cat:'Корпоратив / Нефтегаз',       desc:'Корпоративный бомбер с вышивкой для сети АЗС', images:['lukoil-bomber1.jpg','lukoil-bomber2.jpg'] },
+  'flashin':       { name:'Flashin',        cat:'Ивент / Промо',               desc:'Промо-костюм для мероприятий и активаций бренда', images:['flashin-cos1.jpg','flashin-cos2.jpg','flashin-cos3.jpg'] },
+  'batochik-vest': { name:'Батончик',       cat:'Аксессуары / Жилет',          desc:'Промо-жилеты с DTF-печатью для полевой команды', images:['batochik-vest1.jpg','batochik-vest2.jpg','batochik-vest3.jpg'] },
+  'lada':          { name:'Лада',           cat:'Корпоратив / Авто',           desc:'Корпоративный жилет для официальных дилеров', images:['lada-vest1.jpg','lada-vest2.jpg'] },
+  'rosdetcenter':  { name:'Росдетцентр',    cat:'Корпоратив / Соцсфера',       desc:'Форменная одежда для педагогов и вожатых', images:['rosdetcenter-1.jpg','rosdetcenter-2.jpg','rosdetcenter-3.jpg'] },
+  'trzhd':         { name:'ТР ЖД',          cat:'Корпоратив / Транспорт',      desc:'Корпоративная форма для сотрудников транспортной компании', images:['trzhd-1.jpg','trzhd-2.jpg','trzhd-3.jpg','trzhd-4.jpg','trzhd-5.jpg'] },
+  'terratb':       { name:'Terra TB',       cat:'Корпоратив / Брендинг',       desc:'Брендированная рабочая одежда для команды', images:['terratb1.jpg','terratb2.jpg','terratb3.jpg','terratb4.jpg','terratb5.jpg'] }
+};
+
+/* First-image → project key lookup */
+const IMG_MAP = {};
+Object.entries(PROJECTS).forEach(([key, p]) => { IMG_MAP[p.images[0]] = key; });
+
+/* ===== MODAL STATE ===== */
+let curProject = null, curIdx = 0;
+
+const overlay      = document.getElementById('modalOverlay');
+const modalImg     = document.getElementById('modalImg');
+const modalCat     = document.getElementById('modalCat');
+const modalTitle   = document.getElementById('modalTitle');
+const modalDescTxt = document.getElementById('modalDescText');
+const modalCounter = document.getElementById('modalCounter');
+const modalDots    = document.getElementById('modalDots');
+const btnPrev      = document.getElementById('modalPrev');
+const btnNext      = document.getElementById('modalNext');
+
+function openModal(key, idx) {
+  idx = idx || 0;
+  const p = PROJECTS[key];
+  if (!p) return;
+  curProject = p; curIdx = idx;
+  modalCat.textContent      = p.cat;
+  modalTitle.textContent    = p.name;
+  modalDescTxt.textContent  = p.desc;
+  renderDots();
+  setImage(idx, false);
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  history.replaceState(null, '', '#' + key);
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+  history.replaceState(null, '', location.pathname + location.search);
+  curProject = null;
+}
+
+function setImage(idx, animate) {
+  const src = 'img/portfolio/' + curProject.images[idx];
+  if (animate) {
+    modalImg.classList.add('fading');
+    setTimeout(() => {
+      modalImg.src = src; curIdx = idx;
+      modalCounter.textContent = (idx + 1) + ' / ' + curProject.images.length;
+      refreshDots(); refreshArrows();
+      modalImg.classList.remove('fading');
+    }, 180);
+  } else {
+    modalImg.src = src; curIdx = idx;
+    modalCounter.textContent = (idx + 1) + ' / ' + curProject.images.length;
+    refreshDots(); refreshArrows();
+  }
+}
+
+function navigate(dir) {
+  if (!curProject) return;
+  const ni = curIdx + dir;
+  if (ni < 0 || ni >= curProject.images.length) return;
+  setImage(ni, true);
+}
+
+function renderDots() {
+  modalDots.innerHTML = curProject.images
+    .map((_, i) => `<span class="modal__dot${i === curIdx ? ' active' : ''}" data-i="${i}"></span>`)
+    .join('');
+  modalDots.querySelectorAll('.modal__dot').forEach(d =>
+    d.addEventListener('click', () => setImage(+d.dataset.i, true))
+  );
+}
+
+function refreshDots() {
+  modalDots.querySelectorAll('.modal__dot').forEach((d, i) =>
+    d.classList.toggle('active', i === curIdx)
+  );
+}
+
+function refreshArrows() {
+  btnPrev.disabled = curIdx === 0;
+  btnNext.disabled = curIdx === curProject.images.length - 1;
+}
+
+/* ===== BIND PORTFOLIO ITEMS ===== */
+document.querySelectorAll('.portfolio-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('img');
+    if (!img) return;
+    const key = IMG_MAP[img.getAttribute('src').split('/').pop()];
+    if (key) openModal(key);
+  });
+});
+
+/* Controls */
+document.getElementById('modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+btnPrev.addEventListener('click', () => navigate(-1));
+btnNext.addEventListener('click', () => navigate(1));
+
+/* Keyboard */
+document.addEventListener('keydown', e => {
+  if (!overlay.classList.contains('active')) return;
+  if (e.key === 'Escape')     closeModal();
+  if (e.key === 'ArrowLeft')  navigate(-1);
+  if (e.key === 'ArrowRight') navigate(1);
+});
+
+/* Touch / swipe */
+let touchX = 0;
+overlay.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+overlay.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+});
+
+/* Auto-open from URL hash */
+const initKey = location.hash.slice(1);
+if (initKey && PROJECTS[initKey]) openModal(initKey);
+
+/* ===== PORTFOLIO FILTER ===== */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const items = document.querySelectorAll('.portfolio-item');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    items.forEach(item => {
+      if (filter === 'all' || item.dataset.category === filter) {
+        item.style.display = '';
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        requestAnimationFrame(() => {
+          item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        });
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+/* ===== PORTFOLIO "СМОТРЕТЬ ЕЩЁ" ===== */
+(function() {
+  const btn   = document.getElementById('portfolioMoreBtn');
+  const extra = document.getElementById('portfolioExtra');
+  const icon  = document.getElementById('portfolioMoreIcon');
+  if (!btn || !extra) return;
+
+  btn.addEventListener('click', function() {
+    const isOpen = extra.style.display !== 'none';
+    if (isOpen) {
+      extra.style.display = 'none';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.childNodes[0].textContent = 'Смотреть ещё ';
+      icon.style.transform = 'rotate(0deg)';
+    } else {
+      extra.style.display = '';
+      btn.setAttribute('aria-expanded', 'true');
+      btn.childNodes[0].textContent = 'Скрыть ';
+      icon.style.transform = 'rotate(180deg)';
+      // подключаем клики по новым карточкам к модалу
+      extra.querySelectorAll('.portfolio-item').forEach(item => {
+        if (!item.dataset.modalBound) {
+          item.dataset.modalBound = '1';
+          item.addEventListener('click', function() {
+            const img = item.querySelector('.portfolio-item__img');
+            if (!img) return;
+            const fn = img.src.split('/').pop();
+            const key = IMG_MAP[fn];
+            if (key) openModal(key);
+          });
+        }
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
