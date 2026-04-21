@@ -7,18 +7,18 @@
   <meta name="description" content="Собственный цех в Москве. Пошив мерча, аксессуаров и брендирование для молодых брендов. От 30 штук. 95% заказов в срок." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
   <link rel="stylesheet" href="css/style.css" />
   <style>
     /* ---- HOME SPECIFIC ---- */
     .hero {
-      min-height: 100svh;
+      min-height: 88svh;
       background: var(--bg-dark);
       color: var(--text-inv);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0 0 80px;
+      padding: 0 0 48px;
       position: relative;
       overflow: hidden;
     }
@@ -72,10 +72,10 @@
       color: var(--accent);
     }
     .hero__title {
-      font-size: clamp(56px, 9vw, 140px);
+      font-size: clamp(28px, 5vw, 72px);
       font-weight: 700;
-      line-height: 0.93;
-      letter-spacing: -0.04em;
+      line-height: 1.0;
+      letter-spacing: 0;
       text-transform: uppercase;
       color: var(--text-inv);
       margin-bottom: 36px;
@@ -140,18 +140,18 @@
     }
 
     /* ---- WHY MERCH ---- */
-    .why-merch { background: var(--card-bg); }
+    .why-merch { background: var(--bg-dark); }
     .why-card {
       padding: 32px 28px;
       border-radius: var(--r-lg);
-      background: white;
-      border: 1px solid var(--border);
+      background: #161616;
+      border: 1px solid rgba(255,255,255,0.07);
       transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
     }
     .why-card:hover {
-      border-color: var(--accent);
+      border-color: rgba(200,255,0,0.4);
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+      box-shadow: 0 16px 48px rgba(200,255,0,0.08);
     }
     .why-card__icon {
       font-size: 32px;
@@ -162,12 +162,13 @@
       font-family: var(--font-display);
       font-size: 17px;
       font-weight: 600;
+      color: var(--text-inv);
       margin-bottom: 8px;
-      letter-spacing: -0.01em;
+      letter-spacing: 0;
     }
     .why-card__desc {
       font-size: 14px;
-      color: var(--text-muted);
+      color: rgba(248,248,246,0.5);
       line-height: 1.6;
     }
 
@@ -178,8 +179,8 @@
       overflow: hidden;
       background: var(--bg-dark);
       color: var(--text-inv);
-      padding: 40px;
-      min-height: 320px;
+      padding: 24px 20px 28px;
+      min-height: 260px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -198,15 +199,15 @@
     .service-card:hover::before { opacity: 1; }
     .service-card__num {
       position: absolute;
-      top: 32px; right: 32px;
+      top: 16px; right: 16px;
       font-family: var(--font-mono);
       font-size: 13px;
       color: rgba(248,248,246,0.2);
       letter-spacing: 0.1em;
     }
     .service-card__icon {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: 36px;
+      margin-bottom: 12px;
       display: block;
     }
     .service-card__label {
@@ -218,21 +219,22 @@
       margin-bottom: 8px;
     }
     .service-card__title {
-      font-size: clamp(22px, 2.5vw, 30px);
+      font-size: clamp(13px, 1.3vw, 16px);
       font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+      line-height: 1.25;
     }
     .service-card__desc {
-      font-size: 14px;
+      font-size: 12px;
       color: rgba(248,248,246,0.55);
-      line-height: 1.6;
-      max-width: 300px;
+      line-height: 1.55;
+      max-width: 100%;
     }
     .service-card__arrow {
       position: absolute;
-      bottom: 32px; right: 32px;
-      width: 44px; height: 44px;
+      bottom: 16px; right: 16px;
+      width: 36px; height: 36px;
       border-radius: 50%;
       border: 1px solid rgba(248,248,246,0.15);
       display: flex; align-items: center; justify-content: center;
@@ -341,7 +343,7 @@
       font-size: 20px;
       font-weight: 700;
       color: white;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
     }
     .portfolio-grid-4 {
       display: grid;
@@ -603,7 +605,7 @@
       font-family: var(--font-display);
       font-size: 15px;
       font-weight: 600;
-      letter-spacing: -0.01em;
+      letter-spacing: 0;
       margin-bottom: 8px;
       color: var(--text-inv);
     }
@@ -611,7 +613,7 @@
       font-family: var(--font-display);
       font-size: 28px;
       font-weight: 700;
-      letter-spacing: -0.03em;
+      letter-spacing: 0;
       color: var(--accent);
       margin-bottom: 6px;
     }
@@ -711,41 +713,31 @@
     .testimonial--grid {
       padding: 32px;
       border-radius: var(--r-lg);
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+      background: #161616;
+      border: 1px solid rgba(255,255,255,0.07);
       display: flex;
       flex-direction: column;
       gap: 16px;
       transition: border-color var(--transition), transform var(--transition);
     }
-    .testimonial--grid:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .testimonial--grid:hover { border-color: rgba(200,255,0,0.4); transform: translateY(-3px); }
     .testimonial--dark {
-      background: var(--bg-dark) !important;
+      background: #161616 !important;
       border-color: rgba(200,255,0,0.15) !important;
     }
     .testimonial--accent {
-      background: var(--bg-dark) !important;
+      background: #161616 !important;
       border-color: var(--accent) !important;
     }
     .testimonial--grid .testimonial__quote {
       font-size: 15px;
       line-height: 1.65;
-      letter-spacing: -0.01em;
-    }
-    .testimonial--grid.testimonial--dark .testimonial__quote,
-    .testimonial--grid.testimonial--accent .testimonial__quote {
+      letter-spacing: 0;
       color: var(--text-inv);
     }
     .testimonial--grid .testimonial__author { margin-top: auto; }
-    /* Светлые карточки — тёмный текст */
-    .testimonial--grid:not(.testimonial--dark):not(.testimonial--accent) .testimonial__quote { color: var(--text); }
-    .testimonial--grid:not(.testimonial--dark):not(.testimonial--accent) .testimonial__name  { color: var(--text); }
-    .testimonial--grid:not(.testimonial--dark):not(.testimonial--accent) .testimonial__brand { color: var(--text-muted); }
-    /* Тёмные карточки — светлый текст */
-    .testimonial--grid.testimonial--dark .testimonial__name,
-    .testimonial--grid.testimonial--accent .testimonial__name { color: var(--text-inv); }
-    .testimonial--grid.testimonial--dark .testimonial__brand,
-    .testimonial--grid.testimonial--accent .testimonial__brand { color: rgba(248,248,246,0.35); }
+    .testimonial--grid .testimonial__name  { color: var(--text-inv); }
+    .testimonial--grid .testimonial__brand { color: rgba(248,248,246,0.35); }
     .testimonial__tag {
       display: inline-block;
       font-family: var(--font-mono);
@@ -768,19 +760,18 @@
       margin: 32px 0 40px;
     }
     .pain-card {
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--r-lg);
       padding: 28px 24px;
-      background: var(--card-bg);
+      background: #161616;
+      color: var(--text-inv);
       display: flex;
       flex-direction: column;
       gap: 12px;
       transition: border-color var(--transition), transform var(--transition);
     }
-    .pain-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-    .pain-card--mid { background: var(--bg-dark); color: var(--text-inv); }
-    .pain-card--mid .pain-card__pain { color: rgba(248,248,246,0.7); }
-    .pain-card--mid .pain-card__author { color: rgba(248,248,246,0.35); }
+    .pain-card:hover { border-color: rgba(200,255,0,0.3); transform: translateY(-3px); }
+    .pain-card--mid { background: #1e1e1e; border-color: rgba(200,255,0,0.2); }
     .pain-card__before {
       font-family: var(--font-mono);
       font-size: 10px;
@@ -791,7 +782,7 @@
     .pain-card__pain {
       font-size: 14px;
       line-height: 1.6;
-      color: var(--text-muted);
+      color: rgba(248,248,246,0.6);
       font-style: italic;
       border-left: 2px solid #ef4444;
       padding-left: 12px;
@@ -807,15 +798,16 @@
       font-size: 14px;
       line-height: 1.65;
       font-weight: 500;
+      color: var(--text-inv);
     }
     .pain-card__author {
       font-family: var(--font-mono);
       font-size: 10px;
       letter-spacing: 0.04em;
-      color: var(--text-muted);
+      color: rgba(248,248,246,0.35);
       margin-top: auto;
       padding-top: 8px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255,255,255,0.07);
     }
     @media (max-width: 900px) { .pain-grid { grid-template-columns: 1fr; } }
 
@@ -1404,13 +1396,13 @@
 </section>
 
 <!-- WHY PRO-BLANK -->
-<section class="section why-merch reveal">
+<section class="section why-merch reveal" style="color:var(--text-inv);">
   <div class="container">
     <div class="section-header">
       <div class="section-header__left">
         <span class="label">Почему выбирают нас</span>
         <h2 class="display-md mt-16">7 лет шьём то,<br>что носят реальные люди</h2>
-        <p class="section-header__desc">Много производств — мало тех, кто реально понимает молодые бренды. Вот в чём наша разница.</p>
+        <p class="section-header__desc" style="color:rgba(248,248,246,0.55);">Много производств — мало тех, кто реально понимает молодые бренды. Вот в чём наша разница.</p>
       </div>
     </div>
     <div class="grid-3 gap-16" style="gap:20px;">

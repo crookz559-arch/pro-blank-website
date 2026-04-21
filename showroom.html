@@ -7,7 +7,7 @@
   <meta name="description" content="Приходите в наш шоурум в Москве: потрогайте образцы, купите бланки, вдохновитесь работами и обсудите проект за кофе. Угрешская ул., 22." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
   <link rel="stylesheet" href="css/style.css" />
   <style>
     /* ---- SHOWROOM PAGE ---- */
@@ -50,10 +50,10 @@
       align-items: flex-end;
     }
     .showroom-hero__title {
-      font-size: clamp(72px, 12vw, 180px);
+      font-size: clamp(30px, 5.5vw, 80px);
       font-weight: 700;
-      line-height: 0.88;
-      letter-spacing: -0.05em;
+      line-height: 1.0;
+      letter-spacing: 0;
       text-transform: uppercase;
       color: var(--text-inv);
       margin-bottom: 32px;
@@ -109,7 +109,7 @@
     .showroom-intro__title {
       font-size: clamp(28px, 3.5vw, 46px);
       font-weight: 700;
-      letter-spacing: -0.03em;
+      letter-spacing: 0;
       line-height: 1.1;
       margin-bottom: 20px;
     }
@@ -170,7 +170,7 @@
       font-family: var(--font-display);
       font-size: 20px;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       color: var(--text-inv);
       margin-bottom: 10px;
     }
@@ -316,13 +316,13 @@
     .blank-card {
       border-radius: var(--r-lg);
       padding: 32px 28px;
-      border: 1px solid var(--border);
-      background: white;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: #161616;
       transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
     }
     .blank-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 12px 40px rgba(200,255,0,0.1);
+      border-color: rgba(200,255,0,0.4);
+      box-shadow: 0 12px 40px rgba(200,255,0,0.08);
       transform: translateY(-4px);
     }
     .blank-card__icon { font-size: 36px; margin-bottom: 16px; display: block; }
@@ -330,10 +330,11 @@
       font-family: var(--font-display);
       font-size: 18px;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
+      color: var(--text-inv);
       margin-bottom: 10px;
     }
-    .blank-card__desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .blank-card__desc { font-size: 14px; color: rgba(248,248,246,0.5); line-height: 1.65; }
 
     /* COFFEE CTA */
     .coffee-cta {
@@ -368,7 +369,7 @@
     .coffee-cta__title {
       font-size: clamp(28px, 3vw, 42px);
       font-weight: 700;
-      letter-spacing: -0.03em;
+      letter-spacing: 0;
       color: var(--text-inv);
       margin-bottom: 18px;
       line-height: 1.1;
@@ -516,19 +517,19 @@
       <div>
         <!-- Big stat block -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div style="background:var(--bg-dark);border-radius:var(--r-lg);padding:32px 24px;text-align:center;">
+          <div style="background:#161616;border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid rgba(255,255,255,0.07);">
             <div class="stat-number" style="font-size:48px;color:var(--accent);margin-bottom:8px;">50+</div>
             <div style="font-size:13px;color:rgba(248,248,246,0.4);line-height:1.5;">образцов<br>изделий</div>
           </div>
-          <div style="background:var(--card-bg);border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid var(--border);">
-            <div class="stat-number" style="font-size:48px;margin-bottom:8px;">20+</div>
-            <div style="font-size:13px;color:var(--text-muted);line-height:1.5;">видов<br>тканей</div>
+          <div style="background:#161616;border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid rgba(255,255,255,0.07);">
+            <div class="stat-number" style="font-size:48px;color:var(--accent);margin-bottom:8px;">20+</div>
+            <div style="font-size:13px;color:rgba(248,248,246,0.4);line-height:1.5;">видов<br>тканей</div>
           </div>
-          <div style="background:var(--card-bg);border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid var(--border);">
-            <div class="stat-number" style="font-size:48px;margin-bottom:8px;">0 ₽</div>
-            <div style="font-size:13px;color:var(--text-muted);line-height:1.5;">вход<br>бесплатный</div>
+          <div style="background:#161616;border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid rgba(255,255,255,0.07);">
+            <div class="stat-number" style="font-size:48px;color:var(--accent);margin-bottom:8px;">0 ₽</div>
+            <div style="font-size:13px;color:rgba(248,248,246,0.4);line-height:1.5;">вход<br>бесплатный</div>
           </div>
-          <div style="background:var(--bg-dark);border-radius:var(--r-lg);padding:32px 24px;text-align:center;">
+          <div style="background:#161616;border-radius:var(--r-lg);padding:32px 24px;text-align:center;border:1px solid rgba(255,255,255,0.07);">
             <div class="stat-number" style="font-size:48px;color:var(--accent);margin-bottom:8px;">☕</div>
             <div style="font-size:13px;color:rgba(248,248,246,0.4);line-height:1.5;">кофе<br>за нами</div>
           </div>

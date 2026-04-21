@@ -19,7 +19,7 @@
   --border:     #E0E0DA;
   --border-dark:#2A2A2A;
 
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-display: 'Unbounded', sans-serif;
   --font-body:    'Inter', sans-serif;
   --font-mono:    'Space Mono', monospace;
 
@@ -57,33 +57,34 @@ h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 .display-xl {
-  font-size: clamp(52px, 8vw, 120px);
+  /* Unbounded шире Space Grotesk — кегль уменьшен, трекинг сброшен */
+  font-size: clamp(28px, 5vw, 72px);
   font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 1.0;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .display-lg {
-  font-size: clamp(36px, 5vw, 72px);
+  font-size: clamp(20px, 3.5vw, 48px);
   font-weight: 700;
-  line-height: 1.0;
-  letter-spacing: -0.03em;
+  line-height: 1.05;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 .display-md {
-  font-size: clamp(28px, 3.5vw, 48px);
+  font-size: clamp(16px, 2.5vw, 32px);
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 .label {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--accent);
 }
 .label-accent {
   font-family: var(--font-mono);
@@ -99,8 +100,8 @@ h1, h2, h3, h4, h5 {
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
-.section { padding: clamp(64px, 8vw, 120px) 0; }
-.section-sm { padding: clamp(40px, 5vw, 80px) 0; }
+.section { padding: clamp(36px, 5vw, 64px) 0; }
+.section-sm { padding: clamp(20px, 3vw, 40px) 0; }
 
 /* ---- HEADER ---- */
 .header {
@@ -134,7 +135,7 @@ h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 22px;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   color: var(--text);
   display: flex;
   align-items: center;
@@ -244,7 +245,7 @@ h1, h2, h3, h4, h5 {
   color: var(--text-inv);
   padding: 12px 0;
   border-bottom: 1px solid var(--border-dark);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   transition: color var(--transition-fast), transform var(--transition-fast);
 }
 .mobile-menu a:hover {
@@ -282,7 +283,7 @@ h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 14px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   transition: all var(--transition-fast);
   cursor: pointer;
   white-space: nowrap;
@@ -432,9 +433,9 @@ h1, h2, h3, h4, h5 {
 /* ---- STATS ---- */
 .stat-number {
   font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 72px);
+  font-size: clamp(28px, 3.5vw, 52px);
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 1;
   color: var(--text);
 }
@@ -507,7 +508,7 @@ textarea.form-input {
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -581,7 +582,7 @@ textarea.form-input {
 
 /* ---- PAGE HERO (inner pages) ---- */
 .page-hero {
-  padding: 140px 0 80px;
+  padding: 100px 0 48px;
   background: var(--bg-dark);
   color: var(--text-inv);
   overflow: hidden;
@@ -767,10 +768,11 @@ textarea.form-input {
   gap: 16px;
   padding: 24px;
   border-radius: var(--r-md);
-  background: var(--card-bg);
-  transition: background var(--transition-fast);
+  background: #161616;
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
 }
-.guarantee-item:hover { background: #E8E8E2; }
+.guarantee-item:hover { background: #1e1e1e; border-color: rgba(200,255,0,0.25); }
 .guarantee-item__icon {
   width: 44px; height: 44px;
   border-radius: var(--r-sm);
@@ -783,11 +785,12 @@ textarea.form-input {
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 600;
+  color: var(--text-inv);
   margin-bottom: 4px;
 }
 .guarantee-item__desc {
   font-size: 13px;
-  color: var(--text-muted);
+  color: rgba(248,248,246,0.5);
   line-height: 1.5;
 }
 

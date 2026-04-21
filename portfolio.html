@@ -7,7 +7,7 @@
   <meta name="description" content="Реальные проекты ПРО-БЛАНК: мерч для брендов, аксессуары для ивентов, промо для корпораций. Посмотрите наши работы." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap">
   <link rel="stylesheet" href="css/style.css" />
   <style>
     /* ---- PORTFOLIO PAGE ---- */
@@ -94,7 +94,7 @@
       font-size: 22px;
       font-weight: 700;
       color: white;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
       margin-bottom: 4px;
     }
     .portfolio-item__desc {
@@ -150,7 +150,7 @@
     .case-highlight__title {
       font-size: clamp(28px, 3vw, 44px);
       font-weight: 700;
-      letter-spacing: -0.03em;
+      letter-spacing: 0;
       color: white;
       margin-bottom: 16px;
     }
@@ -177,7 +177,7 @@
     .case-stat__label { font-size: 12px; color: rgba(248,248,246,0.4); margin-top: 4px; }
 
     /* CLIENTS -->
-    .clients-section { background: var(--card-bg); }
+    .clients-section { background: var(--bg-dark); color: var(--text-inv); }
     .clients-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -185,8 +185,8 @@
       align-items: center;
     }
     .client-logo {
-      background: white;
-      border: 1px solid var(--border);
+      background: #161616;
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--r-md);
       padding: 20px 16px;
       display: flex;
@@ -195,13 +195,13 @@
       min-height: 80px;
       transition: border-color var(--transition-fast), transform var(--transition-fast);
     }
-    .client-logo:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .client-logo:hover { border-color: rgba(200,255,0,0.4); transform: translateY(-2px); }
     .client-logo span {
       font-family: var(--font-display);
       font-size: 14px;
       font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text-muted);
+      letter-spacing: 0;
+      color: rgba(248,248,246,0.6);
       text-align: center;
     }
 
@@ -214,13 +214,13 @@
     .niche-card {
       padding: 36px 32px;
       border-radius: var(--r-lg);
-      background: white;
-      border: 1px solid var(--border);
+      background: #161616;
+      border: 1px solid rgba(255,255,255,0.07);
       transition: all var(--transition);
     }
     .niche-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+      border-color: rgba(200,255,0,0.4);
+      box-shadow: 0 16px 48px rgba(200,255,0,0.08);
       transform: translateY(-4px);
     }
     .niche-card__icon { font-size: 36px; margin-bottom: 16px; display: block; }
@@ -228,10 +228,11 @@
       font-family: var(--font-display);
       font-size: 20px;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: 0;
+      color: var(--text-inv);
       margin-bottom: 8px;
     }
-    .niche-card__desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .niche-card__desc { font-size: 14px; color: rgba(248,248,246,0.5); line-height: 1.6; }
 
     @media (max-width: 1000px) {
       .portfolio-masonry { columns: 2; }
@@ -325,7 +326,7 @@
     .modal__title {
       font-family: var(--font-display); font-size: 24px;
       font-weight: 700; color: #fff;
-      letter-spacing: -0.02em; margin-bottom: 4px;
+      letter-spacing: 0; margin-bottom: 4px;
     }
     .modal__desc-text { font-size: 13px; color: rgba(248,248,246,0.45); line-height: 1.55; }
     .modal__right { text-align: right; flex-shrink: 0; }
@@ -642,7 +643,7 @@
 </section>
 
 <!-- NICHES -->
-<section class="section" style="background:var(--card-bg);">
+<section class="section" style="background:var(--bg-dark);color:var(--text-inv);">
   <div class="container">
     <div class="section-header reveal">
       <div class="section-header__left">

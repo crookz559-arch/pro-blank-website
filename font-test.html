@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Font Tester — ПРО-БЛАНК</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- 17 шрифтов с кириллицей -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400;600;700;900&family=Onest:wght@400;500;600;700&family=Mulish:wght@400;500;600;700;800&family=Golos+Text:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Exo+2:wght@400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700;800&family=Jost:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Geologica:wght@400;500;600;700;800&family=Raleway:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap">
+
+  <style>
+    :root {
+      --bg:      #F8F8F6;
+      --bg-dark: #0D0D0D;
+      --accent:  #C8FF00;
+      --text:    #0D0D0D;
+      --muted:   #6B6B6B;
+      --inv:     #F8F8F6;
+      --border:  rgba(13,13,13,0.1);
+      --r:       12px;
+      --r-lg:    20px;
+      --font-active: 'Space Grotesk', sans-serif;
+      --font-mono:   'Space Mono', monospace;
+      --header-h: 112px; /* обновляется JS на мобиле */
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-active);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ═══════════════════════════════════════════
+       ШАПКА
+    ═══════════════════════════════════════════ */
+    .hdr {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--bg-dark);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* Верхняя строка: лого + режимы */
+    .hdr__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .hdr__logo {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(248,248,246,0.35);
+    }
+    .hdr__logo b { color: var(--accent); font-weight: 400; }
+
+    /* Переключатель режимов */
+    .mode-tabs {
+      display: flex;
+      gap: 3px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 3px;
+    }
+    .mode-tab {
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: rgba(248,248,246,0.45);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mode-tab.active {
+      background: rgba(255,255,255,0.12);
+      color: var(--inv);
+    }
+
+    /* Горизонтальный скролл кнопок шрифтов */
+    .hdr__fonts {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hdr__fonts::-webkit-scrollbar { display: none; }
+    .hdr__scroll-hint {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(248,248,246,0.2);
+      letter-spacing: 0.08em;
+      padding-left: 8px;
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .fbtn {
+      flex-shrink: 0;
+      padding: 7px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: transparent;
+      color: rgba(248,248,246,0.55);
+      font-size: 13px;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .fbtn:hover { border-color: rgba(200,255,0,0.5); color: var(--accent); }
+    .fbtn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg-dark);
+      font-weight: 700;
+    }
+    .fbtn .badge {
+      font-size: 8px;
+      opacity: .5;
+      margin-left: 3px;
+      vertical-align: middle;
+    }
+
+    /* Индикатор текущего шрифта (только мобиле) */
+    .hdr__active-label {
+      display: none;
+      padding: 6px 20px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(248,248,246,0.3);
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .hdr__active-label span { color: var(--accent); }
+
+    /* ═══════════════════════════════════════════
+       ОСНОВНАЯ ОБЛАСТЬ
+    ═══════════════════════════════════════════ */
+    .body { padding: 32px 20px 80px; max-width: 1440px; margin: 0 auto; }
+
+    @media (min-width: 768px) {
+      .body { padding: 40px 32px 80px; }
+    }
+
+    /* ─── БАННЕР АКТИВНОГО ШРИФТА ─── */
+    .font-banner {
+      background: var(--bg-dark);
+      border-radius: var(--r-lg);
+      padding: 28px 28px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    @media (min-width: 600px) {
+      .font-banner {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 20px;
+        padding: 32px 40px;
+        margin-bottom: 36px;
+      }
+    }
+    .font-banner__name {
+      font-size: clamp(36px, 8vw, 80px);
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--font-active);
+      line-height: 1;
+      transition: font-family 0.25s;
+    }
+    .font-banner__meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(248,248,246,0.3);
+    }
+
+    /* ─── НАВИГАЦИЯ ПО КЛАВИШАМ (подсказка) ─── */
+    .key-hint {
+      display: none;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(13,13,13,0.3);
+      text-align: right;
+      margin-bottom: 16px;
+    }
+    @media (pointer: fine) { .key-hint { display: block; } }
+
+    /* ═══════════════════════════════════════════
+       ПРЕВЬЮ-БЛОКИ (режим «Превью»)
+    ═══════════════════════════════════════════ */
+    .pg { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 700px)  { .pg { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1100px) { .pg { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .pb { border-radius: var(--r-lg); overflow: hidden; }
+    .pb--wide  { grid-column: 1 / -1; }
+    .pb--dark  { background: var(--bg-dark); }
+    .pb--light { background: var(--bg); border: 1px solid var(--border); }
+    .pb--mid   { background: #161616; }
+
+    .pb__tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(248,248,246,0.25);
+      padding: 14px 24px 0;
+    }
+    .pb--light .pb__tag { color: rgba(13,13,13,0.3); }
+    .pb__inner { padding: 20px 24px 24px; }
+    @media (min-width: 768px) { .pb__inner { padding: 28px 32px 32px; } }
+
+    /* Hero */
+    .pv-hero__pre {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .pv-hero__h1 {
+      font-size: clamp(38px, 6vw, 80px);
+      font-weight: 700;
+      line-height: 0.93;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--inv);
+      font-family: var(--font-active);
+      margin-bottom: 20px;
+      transition: font-family 0.25s;
+    }
+    .pv-hero__sub {
+      font-size: clamp(14px, 1.5vw, 17px);
+      color: rgba(248,248,246,0.5);
+      line-height: 1.65;
+      font-family: var(--font-active);
+      max-width: 520px;
+      margin-bottom: 28px;
+      transition: font-family 0.25s;
+    }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pv-btn {
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 13px;
+      font-family: var(--font-active);
+      cursor: default;
+      transition: font-family 0.25s;
+      white-space: nowrap;
+    }
+    .pv-btn--a { background: var(--accent); color: var(--bg-dark); }
+    .pv-btn--o { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--inv); }
+
+    /* Section heading */
+    .pv-sec__stag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(200,255,0,0.1);
+      border: 1px solid rgba(200,255,0,0.2);
+      padding: 4px 10px;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+    .pv-sec__h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      font-family: var(--font-active);
+      margin-bottom: 14px;
+      transition: font-family 0.25s;
+    }
+    .pv-sec__body {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--muted);
+      font-family: var(--font-active);
+      transition: font-family 0.25s;
+    }
+
+    /* Card */
+    .pv-card__num {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: rgba(248,248,246,0.25);
+      margin-bottom: 14px;
+    }
+    .pv-card__title {
+      font-size: 20px;
+      font-weight: 700;
+      font-family: var(--font-active);
+      color: var(--inv);
+      margin-bottom: 10px;
+      transition: font-family 0.25s;
+    }
+    .pv-card__desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(248,248,246,0.45);
+      font-family: var(--font-active);
+      transition: font-family 0.25s;
+      margin-bottom: 18px;
+    }
+    .pv-card__arrow { font-size: 18px; color: var(--accent); }
+
+    /* Stats */
+    .pv-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .pv-stat__n {
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      font-family: var(--font-active);
+      line-height: 1;
+      margin-bottom: 4px;
+      transition: font-family 0.25s;
+    }
+    .pv-stat__n span { color: var(--accent); }
+    .pv-stat__l {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--font-active);
+      transition: font-family 0.25s;
+    }
+
+    /* Price */
+    .pv-price__lbl {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(248,248,246,0.25);
+      margin-bottom: 6px;
+    }
+    .pv-price__amt {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      font-family: var(--font-active);
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+      transition: font-family 0.25s;
+    }
+    .pv-price__unit {
+      font-size: 12px;
+      color: rgba(248,248,246,0.35);
+      font-family: var(--font-active);
+      margin-bottom: 18px;
+      transition: font-family 0.25s;
+    }
+    .pv-price__list { list-style: none; }
+    .pv-price__list li {
+      font-size: 12px;
+      color: rgba(248,248,246,0.5);
+      font-family: var(--font-active);
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      transition: font-family 0.25s;
+    }
+
+    /* Form */
+    .pv-form__title {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: var(--font-active);
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+      transition: font-family 0.25s;
+    }
+    .pv-input {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: var(--font-active);
+      font-size: 14px;
+      background: #fff;
+      margin-bottom: 10px;
+      color: var(--text);
+      transition: font-family 0.25s;
+    }
+    .pv-input::placeholder { color: rgba(13,13,13,0.35); }
+    .pv-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: var(--bg-dark);
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      font-family: var(--font-active);
+      cursor: default;
+      transition: font-family 0.25s;
+    }
+
+    /* Nav preview */
+    .pv-nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .pv-nav__logo {
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--font-active);
+      color: var(--inv);
+      letter-spacing: -0.02em;
+      transition: font-family 0.25s;
+    }
+    .pv-nav__logo span { color: var(--accent); }
+    .pv-nav__links {
+      display: flex; gap: 20px; flex-wrap: wrap;
+    }
+    .pv-nav__link {
+      font-size: 13px;
+      font-family: var(--font-active);
+      color: rgba(248,248,246,0.55);
+      font-weight: 500;
+      transition: font-family 0.25s;
+    }
+    .pv-nav__link.cur { color: var(--inv); }
+
+    /* ═══════════════════════════════════════════
+       ВЕС / НАЧЕРТАНИЯ
+    ═══════════════════════════════════════════ */
+    .weight-block {
+      background: var(--bg-dark);
+      border-radius: var(--r-lg);
+      padding: 28px 24px;
+      margin-top: 16px;
+    }
+    @media (min-width: 768px) { .weight-block { padding: 36px 40px; } }
+
+    .weight-block__ttl {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(248,248,246,0.25);
+      margin-bottom: 20px;
+    }
+    .wrow {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-family: var(--font-active);
+      color: var(--inv);
+      transition: font-family 0.25s;
+    }
+    .wrow__lbl {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(248,248,246,0.2);
+      width: 36px;
+      flex-shrink: 0;
+    }
+    .w400 { font-weight:400; font-size: clamp(14px,2.5vw,20px); }
+    .w500 { font-weight:500; font-size: clamp(14px,2.5vw,20px); }
+    .w600 { font-weight:600; font-size: clamp(14px,2.5vw,20px); }
+    .w700 { font-weight:700; font-size: clamp(14px,2.5vw,20px); }
+    .w800 { font-weight:800; font-size: clamp(14px,2.5vw,20px); }
+    .w900 { font-weight:900; font-size: clamp(14px,2.5vw,20px); }
+
+    .big-h {
+      margin-top: 16px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .big-h__row {
+      font-family: var(--font-active);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+      color: var(--inv);
+      font-size: clamp(36px, 7vw, 96px);
+      transition: font-family 0.25s;
+    }
+    .big-h__row.ac { color: var(--accent); }
+
+    /* ═══════════════════════════════════════════
+       РЕЖИМ СРАВНЕНИЯ
+    ═══════════════════════════════════════════ */
+    .cmp-sec { margin-bottom: 36px; }
+    .cmp-sec__ttl {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cmp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    @media (min-width: 600px)  { .cmp-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 900px)  { .cmp-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 1200px) { .cmp-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); } }
+
+    .cc {
+      padding: 20px;
+      cursor: pointer;
+      transition: outline 0.12s;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+    .cc.dark  { background: var(--bg-dark); }
+    .cc.light { background: var(--bg); border: 1px solid rgba(13,13,13,0.08); }
+    .cc:hover, .cc.sel { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .cc__tag {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(248,248,246,0.22);
+      margin-bottom: 8px;
+    }
+    .cc.light .cc__tag { color: rgba(13,13,13,0.3); }
+    .cc__text { transition: font-family 0.25s; }
+    .cc__sub {
+      font-size: 11px;
+      margin-top: 6px;
+      line-height: 1.45;
+      transition: font-family 0.25s;
+      opacity: .5;
+    }
+    .cc.sel::after {
+      content: '✓';
+      position: absolute;
+      top: 8px; right: 10px;
+      font-size: 10px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+
+    /* ═══════════════════════════════════════════
+       МОБИЛЬНЫЙ BOTTOM BAR (swipe hint)
+    ═══════════════════════════════════════════ */
+    .swipe-hint {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 20px 20px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: rgba(248,248,246,0.3);
+      z-index: 100;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    @media (pointer: coarse) { .swipe-hint { display: block; } }
+
+    /* Скрываем ненужные режимы */
+    #view-preview  { display: block; }
+    #view-compare  { display: none; }
+    #view-weights  { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ ШАПКА ══════════════ -->
+<header class="hdr" id="hdr">
+
+  <div class="hdr__top">
+    <div class="hdr__logo">ПРО-БЛАНК <b>/</b> font tester</div>
+    <div class="mode-tabs">
+      <button class="mode-tab active" data-view="preview">Превью</button>
+      <button class="mode-tab" data-view="compare">Сравнение</button>
+      <button class="mode-tab" data-view="weights">Веса</button>
+    </div>
+  </div>
+
+  <div class="hdr__fonts" id="fontBtns">
+    <!-- Кнопки генерируются JS -->
+    <div class="hdr__scroll-hint">→ скролл</div>
+  </div>
+
+  <div class="hdr__active-label" id="activeLabel">
+    Активный: <span id="activeLabelText">Space Grotesk</span>
+  </div>
+
+</header>
+
+<!-- ══════════════ ТЕЛО ══════════════ -->
+<div class="body">
+  <div class="key-hint">← → клавиши для листания шрифтов</div>
+
+  <!-- ─── РЕЖИМ: ПРЕВЬЮ ─── -->
+  <div id="view-preview">
+
+    <div class="font-banner">
+      <div class="font-banner__name" id="bannerName">Space Grotesk</div>
+      <div class="font-banner__meta" id="bannerMeta">текущий шрифт сайта · Google Fonts · кириллица ✓</div>
+    </div>
+
+    <div class="pg">
+
+      <!-- HERO — wide -->
+      <div class="pb pb--dark pb--wide">
+        <div class="pb__tag">/ hero /</div>
+        <div class="pb__inner">
+          <div class="pv-hero__pre">— Собственный цех в Москве</div>
+          <div class="pv-hero__h1">Производим<br>мерч, который<br><span style="color:var(--accent)">не стыдно</span><br>носить</div>
+          <div class="pv-hero__sub">Пошив одежды и аксессуаров для брендов, ивентов и корпораций. От 30 штук. 95% заказов в срок.</div>
+          <div class="btn-row">
+            <div class="pv-btn pv-btn--a">Узнать цену</div>
+            <div class="pv-btn pv-btn--o">Смотреть работы</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAV — wide -->
+      <div class="pb pb--dark pb--wide">
+        <div class="pb__tag">/ header nav /</div>
+        <div class="pb__inner">
+          <div class="pv-nav">
+            <div class="pv-nav__logo">ПРО-БЛАНК<span>.</span></div>
+            <div class="pv-nav__links">
+              <span class="pv-nav__link cur">Главная</span>
+              <span class="pv-nav__link">Услуги</span>
+              <span class="pv-nav__link">Портфолио</span>
+              <span class="pv-nav__link">О нас</span>
+              <span class="pv-nav__link">Шоурум</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION HEADING -->
+      <div class="pb pb--light">
+        <div class="pb__tag" style="color:rgba(13,13,13,.3)">/ section heading /</div>
+        <div class="pb__inner">
+          <div class="pv-sec__stag">Наши услуги</div>
+          <div class="pv-sec__h2">Всё, что<br>можно носить</div>
+          <div class="pv-sec__body">Производим мерч, аксессуары и корпоративную форму. Собственный цех, контроль качества на каждом этапе.</div>
+        </div>
+      </div>
+
+      <!-- SERVICE CARD -->
+      <div class="pb pb--mid">
+        <div class="pb__tag">/ service card /</div>
+        <div class="pb__inner">
+          <div class="pv-card__num">01 / ПОШИВ</div>
+          <div class="pv-card__title">Пошив мерча<br>и одежды</div>
+          <div class="pv-card__desc">Футболки, худи, куртки, комбинезоны — любые модели под ваш бриф. Тираж от 30 штук.</div>
+          <div class="pv-card__arrow">↗</div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="pb pb--light">
+        <div class="pb__tag" style="color:rgba(13,13,13,.3)">/ stats /</div>
+        <div class="pb__inner">
+          <div class="pv-stats">
+            <div><div class="pv-stat__n">200<span>+</span></div><div class="pv-stat__l">проектов</div></div>
+            <div><div class="pv-stat__n">95<span>%</span></div><div class="pv-stat__l">в срок</div></div>
+            <div><div class="pv-stat__n">30<span>шт</span></div><div class="pv-stat__l">минимум</div></div>
+            <div><div class="pv-stat__n">7<span>лет</span></div><div class="pv-stat__l">на рынке</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRICE -->
+      <div class="pb pb--dark">
+        <div class="pb__tag">/ price /</div>
+        <div class="pb__inner">
+          <div class="pv-price__lbl">Футболка оверсайз</div>
+          <div class="pv-price__amt">от 890 ₽</div>
+          <div class="pv-price__unit">за единицу · тираж от 30 шт</div>
+          <ul class="pv-price__list">
+            <li><span>Крой и пошив</span><span>включено</span></li>
+            <li><span>Вышивка</span><span>+120 ₽</span></li>
+            <li><span>Принт DTF</span><span>+180 ₽</span></li>
+            <li><span>Упаковка</span><span>+40 ₽</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="pb pb--light">
+        <div class="pb__tag" style="color:rgba(13,13,13,.3)">/ form /</div>
+        <div class="pb__inner">
+          <div class="pv-form__title">Узнать цену</div>
+          <input class="pv-input" type="text" placeholder="Ваше имя" readonly>
+          <input class="pv-input" type="text" placeholder="Телефон или @логин" readonly>
+          <select class="pv-input" style="appearance:none">
+            <option>Мерч и одежда</option>
+          </select>
+          <button class="pv-submit">Рассчитать стоимость →</button>
+        </div>
+      </div>
+
+    </div><!-- /pg -->
+  </div><!-- /view-preview -->
+
+
+  <!-- ─── РЕЖИМ: СРАВНЕНИЕ ─── -->
+  <div id="view-compare">
+
+    <div class="cmp-sec">
+      <div class="cmp-sec__ttl">/ Hero заголовок — uppercase крупный /</div>
+      <div class="cmp-grid" id="cmp-h1"></div>
+    </div>
+
+    <div class="cmp-sec">
+      <div class="cmp-sec__ttl">/ Body текст — читаемость 15px /</div>
+      <div class="cmp-grid" id="cmp-body"></div>
+    </div>
+
+    <div class="cmp-sec">
+      <div class="cmp-sec__ttl">/ Название раздела — h2 /</div>
+      <div class="cmp-grid" id="cmp-h2"></div>
+    </div>
+
+    <div class="cmp-sec">
+      <div class="cmp-sec__ttl">/ Карточка услуги /</div>
+      <div class="cmp-grid" id="cmp-card"></div>
+    </div>
+
+    <div class="cmp-sec">
+      <div class="cmp-sec__ttl">/ Цены и цифры /</div>
+      <div class="cmp-grid" id="cmp-price"></div>
+    </div>
+
+    <div class="cmp-sec">
+      <div class="cmp-sec__ttl">/ Кнопки /</div>
+      <div class="cmp-grid" id="cmp-btn"></div>
+    </div>
+
+  </div><!-- /view-compare -->
+
+
+  <!-- ─── РЕЖИМ: ВЕСА ─── -->
+  <div id="view-weights">
+
+    <div class="font-banner">
+      <div class="font-banner__name" id="bannerName2">Space Grotesk</div>
+      <div class="font-banner__meta">таблица начертаний</div>
+    </div>
+
+    <div class="weight-block">
+      <div class="weight-block__ttl">/ начертания 400 → 900 /</div>
+      <div class="wrow"><span class="wrow__lbl">400</span><span class="w400">Пошив мерча и корпоративной одежды в Москве — от 30 штук</span></div>
+      <div class="wrow"><span class="wrow__lbl">500</span><span class="w500">Пошив мерча и корпоративной одежды в Москве — от 30 штук</span></div>
+      <div class="wrow"><span class="wrow__lbl">600</span><span class="w600">Пошив мерча и корпоративной одежды в Москве — от 30 штук</span></div>
+      <div class="wrow"><span class="wrow__lbl">700</span><span class="w700">Пошив мерча и корпоративной одежды в Москве — от 30 штук</span></div>
+      <div class="wrow"><span class="wrow__lbl">800</span><span class="w800">Пошив мерча и корпоративной одежды в Москве — от 30 штук</span></div>
+      <div class="wrow"><span class="wrow__lbl">900</span><span class="w900">Пошив мерча и корпоративной одежды в Москве — от 30 штук</span></div>
+
+      <div class="big-h">
+        <div class="big-h__row">ПРО-БЛАНК</div>
+        <div class="big-h__row ac">ПРОИЗВОДСТВО</div>
+        <div class="big-h__row">ОДЕЖДЫ</div>
+      </div>
+    </div>
+
+    <!-- Алфавиты -->
+    <div class="weight-block" style="margin-top:16px">
+      <div class="weight-block__ttl">/ алфавит — кириллица /</div>
+      <div class="wrow" style="flex-wrap:wrap;gap:4px 0;">
+        <span class="wrow__lbl">А—Я</span>
+        <span class="w700" style="line-height:1.6;letter-spacing:0.04em;word-spacing:6px">
+          А Б В Г Д Е Ё Ж З И Й К Л М Н О П Р С Т У Ф Х Ц Ч Ш Щ Ъ Ы Ь Э Ю Я
+        </span>
+      </div>
+      <div class="wrow" style="flex-wrap:wrap;gap:4px 0;margin-top:8px">
+        <span class="wrow__lbl">а—я</span>
+        <span class="w400" style="line-height:1.6;letter-spacing:0.04em;word-spacing:6px">
+          а б в г д е ё ж з и й к л м н о п р с т у ф х ц ч ш щ ъ ы ь э ю я
+        </span>
+      </div>
+    </div>
+
+    <!-- Цифры -->
+    <div class="weight-block" style="margin-top:16px">
+      <div class="weight-block__ttl">/ цифры и символы /</div>
+      <div style="font-family:var(--font-active);font-weight:700;font-size:clamp(28px,5vw,52px);color:var(--inv);letter-spacing:-0.02em;line-height:1.2;transition:font-family 0.25s">
+        0 1 2 3 4 5 6 7 8 9 ₽ % + — /
+      </div>
+      <div style="font-family:var(--font-active);font-size:clamp(20px,3vw,32px);color:rgba(248,248,246,0.35);margin-top:12px;transition:font-family 0.25s">
+        200+ проектов · 95% в срок · от 890 ₽
+      </div>
+    </div>
+
+  </div><!-- /view-weights -->
+
+</div><!-- /body -->
+
+<!-- Мобильная подсказка -->
+<div class="swipe-hint">← → листай шрифты прокруткой вверху</div>
+
+
+<script>
+/* ══════════════════════════════════════════
+   ДАННЫЕ ШРИФТОВ
+══════════════════════════════════════════ */
+const FONTS = [
+  { name:'Space Grotesk', css:"'Space Grotesk',sans-serif",  note:'текущий' },
+  { name:'Manrope',        css:"'Manrope',sans-serif",        note:'геометрический' },
+  { name:'Unbounded',      css:"'Unbounded',sans-serif",      note:'широкий / брутальный' },
+  { name:'Onest',          css:"'Onest',sans-serif",          note:'нейтральный' },
+  { name:'Geologica',      css:"'Geologica',sans-serif",      note:'современная кириллица' },
+  { name:'Mulish',         css:"'Mulish',sans-serif",         note:'чистый, лёгкий' },
+  { name:'Rubik',          css:"'Rubik',sans-serif",          note:'чуть скруглённый' },
+  { name:'Jost',           css:"'Jost',sans-serif",           note:'геометрический minimal' },
+  { name:'DM Sans',        css:"'DM Sans',sans-serif",        note:'современный editorial' },
+  { name:'Nunito Sans',    css:"'Nunito Sans',sans-serif",    note:'мягкий нейтральный' },
+  { name:'Golos Text',     css:"'Golos Text',sans-serif",     note:'русский дизайн' },
+  { name:'Montserrat',     css:"'Montserrat',sans-serif",     note:'проверенный классик' },
+  { name:'Raleway',        css:"'Raleway',sans-serif",        note:'элегантный' },
+  { name:'Oswald',         css:"'Oswald',sans-serif",         note:'конденсированный' },
+  { name:'Syne',           css:"'Syne',sans-serif",           note:'editorial trendy' },
+  { name:'Exo 2',          css:"'Exo 2',sans-serif",          note:'футуристичный' },
+  { name:'PT Sans',        css:"'PT Sans',sans-serif",        note:'классическая кириллица' },
+];
+
+/* ══════════════════════════════════════════
+   ИНИЦИАЛИЗАЦИЯ
+══════════════════════════════════════════ */
+const root         = document.documentElement;
+const btnContainer = document.getElementById('fontBtns');
+const hdr          = document.getElementById('hdr');
+
+let current = FONTS[0];
+let compareBuilt = false;
+
+// Создаём кнопки шрифтов
+FONTS.forEach(f => {
+  const b = document.createElement('button');
+  b.className = 'fbtn' + (f === FONTS[0] ? ' active' : '');
+  b.dataset.name = f.name;
+  b.style.fontFamily = f.css;
+  b.innerHTML = f.name + (f.note === 'текущий' ? '<span class="badge">текущий</span>' : '');
+  b.addEventListener('click', () => applyFont(f));
+  // вставляем перед scroll-hint
+  btnContainer.insertBefore(b, btnContainer.lastElementChild);
+});
+
+/* ══════════════════════════════════════════
+   ПЕРЕКЛЮЧЕНИЕ ШРИФТА
+══════════════════════════════════════════ */
+function applyFont(f) {
+  current = f;
+  root.style.setProperty('--font-active', f.css);
+
+  // кнопки
+  document.querySelectorAll('.fbtn').forEach(b =>
+    b.classList.toggle('active', b.dataset.name === f.name)
+  );
+
+  // баннеры
+  ['bannerName','bannerName2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = f.name;
+    el.style.fontFamily = f.css;
+  });
+  document.getElementById('bannerMeta').textContent =
+    (f.note === 'текущий' ? 'текущий шрифт сайта · ' : f.note + ' · ') +
+    'Google Fonts · кириллица ✓';
+
+  // мобильный лейбл
+  document.getElementById('activeLabelText').textContent = f.name;
+
+  // подсветка в сравнении
+  document.querySelectorAll('.cc').forEach(c =>
+    c.classList.toggle('sel', c.dataset.fname === f.name)
+  );
+
+  // scroll активной кнопки в видимость
+  const activeBtn = btnContainer.querySelector('.fbtn.active');
+  if (activeBtn) {
+    activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+}
+
+/* ══════════════════════════════════════════
+   РЕЖИМЫ
+══════════════════════════════════════════ */
+const views = { preview: 'view-preview', compare: 'view-compare', weights: 'view-weights' };
+
+document.querySelectorAll('.mode-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const v = btn.dataset.view;
+    document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    Object.entries(views).forEach(([key, id]) => {
+      document.getElementById(id).style.display = key === v ? 'block' : 'none';
+    });
+    if (v === 'compare') buildCompare();
+    window.scrollTo({ top: hdr.offsetHeight, behavior: 'smooth' });
+  });
+});
+
+/* ══════════════════════════════════════════
+   СТРОИМ ТАБЛИЦУ СРАВНЕНИЯ
+══════════════════════════════════════════ */
+const CMP_CONFIGS = [
+  { id:'cmp-h1',    dark:true,  size:'clamp(28px,4.5vw,44px)', weight:700, ls:'-0.04em', tt:'uppercase', lh:'0.95',
+    text:'Производим мерч, который носят', sub:null },
+  { id:'cmp-body',  dark:false, size:'14px',                   weight:400, ls:'0',       tt:'none',      lh:'1.65',
+    text:'Пошив одежды и аксессуаров для брендов и корпораций. Собственный цех в Москве. От 30 штук.', sub:null },
+  { id:'cmp-h2',    dark:false, size:'clamp(22px,3.5vw,36px)', weight:700, ls:'-0.03em', tt:'none',      lh:'1.05',
+    text:'Всё, что можно носить', sub:'Производим мерч, аксессуары и корпоративную форму.' },
+  { id:'cmp-card',  dark:true,  size:'18px',                   weight:700, ls:'-0.01em', tt:'none',      lh:'1.2',
+    text:'Пошив мерча и одежды', sub:'Футболки, худи, куртки — любые модели под ваш бриф.' },
+  { id:'cmp-price', dark:true,  size:'clamp(28px,4vw,42px)',   weight:700, ls:'-0.04em', tt:'none',      lh:'1',
+    text:'от 890 ₽', sub:'за единицу · тираж от 30 шт' },
+  { id:'cmp-btn',   dark:true,  size:'13px',                   weight:600, ls:'0.01em',  tt:'none',      lh:'1',
+    text:'Узнать цену', sub:'Рассчитать стоимость →' },
+];
+
+function buildCompare() {
+  if (compareBuilt) return;
+  compareBuilt = true;
+
+  CMP_CONFIGS.forEach(cfg => {
+    const grid = document.getElementById(cfg.id);
+    FONTS.forEach(f => {
+      const cell = document.createElement('div');
+      cell.className = 'cc ' + (cfg.dark ? 'dark' : 'light');
+      cell.dataset.fname = f.name;
+      if (f.name === current.name) cell.classList.add('sel');
+
+      cell.innerHTML = `
+        <div class="cc__tag">${f.name}</div>
+        <div class="cc__text" style="
+          font-family:${f.css};
+          font-size:${cfg.size};
+          font-weight:${cfg.weight};
+          letter-spacing:${cfg.ls};
+          text-transform:${cfg.tt};
+          line-height:${cfg.lh};
+          color:${cfg.dark ? 'var(--inv)' : 'var(--text)'};
+        ">${cfg.text}</div>
+        ${cfg.sub ? `<div class="cc__sub" style="font-family:${f.css};color:${cfg.dark ? 'rgba(248,248,246,0.45)' : 'var(--muted)'}">${cfg.sub}</div>` : ''}
+      `;
+      cell.addEventListener('click', () => applyFont(f));
+      grid.appendChild(cell);
+    });
+  });
+}
+
+/* ══════════════════════════════════════════
+   КЛАВИАТУРА
+══════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  const idx = FONTS.findIndex(f => f.name === current.name);
+  if (e.key === 'ArrowRight') applyFont(FONTS[(idx + 1) % FONTS.length]);
+  if (e.key === 'ArrowLeft')  applyFont(FONTS[(idx - 1 + FONTS.length) % FONTS.length]);
+});
+
+/* ══════════════════════════════════════════
+   МОБИЛЕ: ПОКАЗЫВАЕМ АКТИВНЫЙ ЛЕЙБЛ
+══════════════════════════════════════════ */
+const activeLabel = document.getElementById('activeLabel');
+if (window.matchMedia('(pointer: coarse)').matches) {
+  activeLabel.style.display = 'block';
+}
+</script>
+
+</body>
+</html>
