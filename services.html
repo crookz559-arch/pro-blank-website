@@ -160,24 +160,123 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
+
+    /* ---- MATERIAL CARDS — photo/texture style ---- */
     .material-card {
-      background: #161616;
-      border: 1px solid rgba(255,255,255,0.07);
+      position: relative;
       border-radius: var(--r-md);
-      padding: 24px 20px;
-      text-align: center;
-      transition: border-color var(--transition-fast), transform var(--transition-fast);
+      overflow: hidden;
+      height: 220px;
+      display: flex;
+      align-items: flex-end;
+      background-size: cover;
+      background-position: center;
+      cursor: default;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
-    .material-card:hover { border-color: rgba(200,255,0,0.4); transform: translateY(-3px); }
-    .material-card__icon { font-size: 36px; margin-bottom: 12px; display: block; }
+    /* dark gradient overlay for text legibility */
+    .material-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.92) 0%,
+        rgba(0,0,0,0.5)  42%,
+        rgba(0,0,0,0.12) 100%
+      );
+      transition: opacity 0.35s;
+      z-index: 1;
+    }
+    .material-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 56px rgba(0,0,0,0.55);
+    }
+    .material-card__body {
+      position: relative;
+      z-index: 2;
+      padding: 18px 20px;
+      width: 100%;
+    }
     .material-card__name {
       font-family: var(--font-display);
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-inv);
-      margin-bottom: 6px;
+      font-size: clamp(14px, 1.2vw, 16px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0;
+      line-height: 1.2;
     }
-    .material-card__desc { font-size: 12px; color: rgba(248,248,246,0.5); line-height: 1.5; }
+    .material-card__badge {
+      display: inline-block;
+      margin-top: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .material-card__desc {
+      font-size: 12px;
+      color: rgba(248,248,246,0.65);
+      line-height: 1.55;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.3s, margin-top 0.3s;
+    }
+    .material-card:hover .material-card__desc {
+      max-height: 72px;
+      opacity: 1;
+      margin-top: 7px;
+    }
+
+    /* Individual fabric textures via CSS gradients
+       Replace url('img/materials/XXX.jpg') with real fabric photos for best result */
+
+    /* Трикотаж — knit: warm brown, diamond crosshatch */
+    .material-card--knit {
+      background-image:
+        url('img/materials/knit.jpg'),
+        repeating-linear-gradient(45deg,  rgba(255,255,255,0.028) 0, rgba(255,255,255,0.028) 1px, transparent 1px, transparent 11px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.028) 0, rgba(255,255,255,0.028) 1px, transparent 1px, transparent 11px),
+        linear-gradient(150deg, #3d2e1e 0%, #271a0e 55%, #190f08 100%);
+    }
+    /* Текстиль — polyester: cool navy, woven grid */
+    .material-card--textile {
+      background-image:
+        url('img/materials/textile.jpg'),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.022) 0, rgba(255,255,255,0.022) 1px, transparent 1px, transparent 9px),
+        repeating-linear-gradient(0deg,  rgba(255,255,255,0.022) 0, rgba(255,255,255,0.022) 1px, transparent 1px, transparent 9px),
+        linear-gradient(150deg, #172030 0%, #0f1520 55%, #080d14 100%);
+    }
+    /* Шерсть — wool: deep burgundy-brown, soft radial dots */
+    .material-card--wool {
+      background-image:
+        url('img/materials/wool.jpg'),
+        repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 14px),
+        linear-gradient(150deg, #3a1f14 0%, #261208 55%, #180a04 100%);
+    }
+    /* Флис / Полар — fleece: slate blue, diagonal soft lines */
+    .material-card--fleece {
+      background-image:
+        url('img/materials/fleece.jpg'),
+        repeating-linear-gradient(30deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 8px),
+        linear-gradient(150deg, #1b2638 0%, #111820 55%, #0b1018 100%);
+    }
+    /* Хлопок-сатин — cotton: warm neutral, fine horizontal lines */
+    .material-card--cotton {
+      background-image:
+        url('img/materials/cotton.jpg'),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 7px),
+        linear-gradient(150deg, #2e2418 0%, #1e1610 55%, #130e08 100%);
+    }
+    /* Смесовые — blend: muted olive, 60° diagonal */
+    .material-card--blend {
+      background-image:
+        url('img/materials/blend.jpg'),
+        repeating-linear-gradient(60deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 10px),
+        linear-gradient(150deg, #1e2618 0%, #141a10 55%, #0e120a 100%);
+    }
 
     /* DECORATIONS */
     .decor-grid {
@@ -223,21 +322,26 @@
     .pricing-block__desc { font-size: 15px; color: rgba(248,248,246,0.55); line-height: 1.6; }
 
     @media (max-width: 900px) {
-      .services-full-grid { grid-template-columns: 1fr 1fr; /* уже 2 col по умолчанию */ }
+      .services-full-grid { grid-template-columns: 1fr 1fr; }
       .feature-highlight { grid-template-columns: 1fr; gap: 40px; padding: 40px; }
       .materials-grid { grid-template-columns: repeat(2, 1fr); }
+      .material-card { height: 200px; }
       .decor-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 600px) {
       .services-full-grid { grid-template-columns: 1fr; }
       .materials-grid { grid-template-columns: repeat(2, 1fr); }
+      .material-card { height: 180px; }
       .decor-grid { grid-template-columns: repeat(2, 1fr); }
       .feature-highlight { padding: 28px; }
       .feature-highlight__visual { grid-template-columns: 1fr 1fr; }
-      /* pricing block buttons stack on mobile */
       .pricing-block { flex-direction: column; padding: 28px 20px; }
       .pricing-block > div:last-child { flex-direction: column; width: 100%; }
       .pricing-block > div:last-child .btn { width: 100%; }
+    }
+    @media (max-width: 400px) {
+      .materials-grid { grid-template-columns: 1fr; }
+      .material-card { height: 170px; }
     }
   </style>
 </head>
@@ -449,35 +553,47 @@
       </div>
     </div>
     <div class="materials-grid">
-      <div class="material-card reveal reveal-delay-1">
-        <span class="material-card__icon">🧶</span>
-        <div class="material-card__name">Трикотаж</div>
-        <div class="material-card__desc">Футер, кулирка, рибана, кашкорсе — для худи, свитшотов, футболок, лонгсливов и манжет. 180–340 г/м².</div>
+      <div class="material-card material-card--knit reveal reveal-delay-1">
+        <div class="material-card__body">
+          <div class="material-card__name">Трикотаж</div>
+          <div class="material-card__badge">футер · кулирка · рибана</div>
+          <div class="material-card__desc">Для худи, свитшотов, футболок и лонгсливов. Плотность 180–340 г/м².</div>
+        </div>
       </div>
-      <div class="material-card reveal reveal-delay-2">
-        <span class="material-card__icon">⚡</span>
-        <div class="material-card__name">Текстиль</div>
-        <div class="material-card__desc">Полиэстерные ткани: таслан, оксфорд, курточные — для ветровок, спортивной и промо-одежды. Лёгкие и прочные.</div>
+      <div class="material-card material-card--textile reveal reveal-delay-2">
+        <div class="material-card__body">
+          <div class="material-card__name">Текстиль</div>
+          <div class="material-card__badge">таслан · оксфорд · курточные</div>
+          <div class="material-card__desc">Полиэстерные ткани для ветровок, спортивной и промо-одежды. Лёгкие и прочные.</div>
+        </div>
       </div>
-      <div class="material-card reveal reveal-delay-3">
-        <span class="material-card__icon">🐑</span>
-        <div class="material-card__name">Шерсть</div>
-        <div class="material-card__desc">Шерстяные и полушерстяные ткани — для пальто, бомберов и верхней одежды. Тепло, структура, премиальный вид.</div>
+      <div class="material-card material-card--wool reveal reveal-delay-3">
+        <div class="material-card__body">
+          <div class="material-card__name">Шерсть</div>
+          <div class="material-card__badge">шерстяные · полушерстяные</div>
+          <div class="material-card__desc">Для пальто, бомберов и верхней одежды. Тепло, структура, премиальный вид.</div>
+        </div>
       </div>
-      <div class="material-card reveal reveal-delay-1">
-        <span class="material-card__icon">🏔️</span>
-        <div class="material-card__name">Флис / Полар</div>
-        <div class="material-card__desc">Тёплые изделия и подкладки. Хорошо держит тепло, лёгкий, мягкий.</div>
+      <div class="material-card material-card--fleece reveal reveal-delay-1">
+        <div class="material-card__body">
+          <div class="material-card__name">Флис / Полар</div>
+          <div class="material-card__badge">флис · полар · подкладка</div>
+          <div class="material-card__desc">Тёплые изделия и подкладки. Хорошо держит тепло, лёгкий, мягкий.</div>
+        </div>
       </div>
-      <div class="material-card reveal reveal-delay-2">
-        <span class="material-card__icon">✨</span>
-        <div class="material-card__name">Хлопок-сатин</div>
-        <div class="material-card__desc">Плотный хлопок с гладкой поверхностью — идеален для печати и брендирования.</div>
+      <div class="material-card material-card--cotton reveal reveal-delay-2">
+        <div class="material-card__body">
+          <div class="material-card__name">Хлопок-сатин</div>
+          <div class="material-card__badge">плотный · гладкий · мерсеризованный</div>
+          <div class="material-card__desc">Гладкая поверхность, идеален для DTF-печати и брендирования.</div>
+        </div>
       </div>
-      <div class="material-card reveal reveal-delay-3">
-        <span class="material-card__icon">🎭</span>
-        <div class="material-card__name">Смесовые ткани</div>
-        <div class="material-card__desc">Хлопок+полиэстер 50/50 — баланс мягкости и практичности. Хит для мерча.</div>
+      <div class="material-card material-card--blend reveal reveal-delay-3">
+        <div class="material-card__body">
+          <div class="material-card__name">Смесовые ткани</div>
+          <div class="material-card__badge">хлопок+полиэстер 50/50</div>
+          <div class="material-card__desc">Баланс мягкости и практичности. Самый популярный состав для мерча.</div>
+        </div>
       </div>
     </div>
   </div>
